@@ -643,8 +643,7 @@ button:active {
   justify-content: space-between;
 }
 
-.history-line {
-  color: var(--success);
+.font-bold {
   font-weight: var(--font-weight-bold);
 }
 

@@ -1,0 +1,86 @@
+- [ ] Light and Dark themes respecting preferences (with toggle?)
+- [ ] Target Super small, lean, and fast
+- [ ] Customizable templates for the different aspects of the page
+- [ ] Monospace design that does not need JS (monospace web, Berkeley mono)
+- [ ] As little dependencies as possible, and as small as possible
+- [ ] Show the last time the page was updated
+- [ ] Have option to set output to a location (S3?), or to a file other than `/dist`
+- [ ] Option to specify favicon
+- [ ] Make sure box drawing diagrams work, and use shading ascii characters for box shadows? (look below)
+- [ ] Color of highlighted text should be custom
+
+
+- [ ] Some super small amount of JS for allowing for nice features?
+- [ ] Show percentages of uptime based on history
+- [ ] Have examples of running as a native binary/cron job, as well as running on lambda/cloudflare worker
+- [ ] Mobile friendly
+- [ ] Time since last incident poster with running clock (Joke)
+- [ ] Css minifier?
+
+
+CSS
+- [ ] Box drawing
+- [ ] Shading ASCII
+- [ ] Highlighting
+- [ ] Monospace settings
+- [ ] Grid layouts like monospace
+- [ ] Toggle light and dark mode
+
+
+
+Box Drawing:
+
+                        ╔═turbopuffer══════════════════════════════╗
+╔════════════╗          ║                                          ║░
+║            ║░         ║  ┏━━━━━━━━━━━━━━━┓     ┏━━━━━━━━━━━━━━┓  ║░
+║   client   ║░───API──▶║  ┃    Memory/    ┃────▶┃    Object    ┃  ║░
+║            ║░         ║  ┃   SSD Cache   ┃     ┃ Storage (S3) ┃  ║░
+╚════════════╝░         ║  ┗━━━━━━━━━━━━━━━┛     ┗━━━━━━━━━━━━━━┛  ║░
+ ░░░░░░░░░░░░░░         ║                                          ║░
+                        ╚══════════════════════════════════════════╝░
+                         ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+
+
+╭─────────────────╮
+│ MONOSPACE ROCKS │
+╰─────────────────╯
+
+
+
+┌───────┐ ┌───────┐ ┌───────┐
+│Actor 1│ │Actor 2│ │Actor 3│
+└───┬───┘ └───┬───┘ └───┬───┘
+    │         │         │
+    │         │  msg 1  │
+    │         │────────►│
+    │         │         │
+    │  msg 2  │         │
+    │────────►│         │
+┌───┴───┐ ┌───┴───┐ ┌───┴───┐
+│Actor 1│ │Actor 2│ │Actor 3│
+└───────┘ └───────┘ └───────┘
+
+
+
+
+                      Things I Have
+
+    │                                     ████ Usable
+15  │
+    │                                     ░░░░ Broken
+    │
+12  │             ░
+    │             ░
+    │   ░         ░
+ 9  │   ░         ░
+    │   ░         ░
+    │   ░         ░                    ░
+ 6  │   █         ░         ░          ░
+    │   █         ░         ░          ░
+    │   █         ░         █          ░
+ 3  │   █         █         █          ░
+    │   █         █         █          ░
+    │   █         █         █          ░
+ 0  └───▀─────────▀─────────▀──────────▀─────────────
+      Socks     Jeans     Shirts   USB Drives

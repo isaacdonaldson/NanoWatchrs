@@ -1,0 +1,26 @@
+
+<table class="header">
+    <tr>
+        <td colspan="2" rowspan="2" class="width-auto">
+            <h1 class="title">{{ blk.title }}</h1>
+            <span class="subtitle">{{ blk.subtitle }}</span>
+        </td>
+        <th>Status</th>
+        <td class="width-min">
+            <div class="inline-row">
+                {{ blk.status }}
+                <span class="status-marker bg-{{ blk.state }}"></span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td class="width-min"><time style="white-space: pre">{{ blk.updated_at }}</time></td>
+    </tr>
+    <tr>
+        <th class="width-auto">30 Days</th>
+        <td class="width-min history-line">{{ blk.history_line }}</td>
+        <th class="width-min">Uptime</th>
+        <td>{{ blk.uptime }}%</td>
+    </tr>
+</table>

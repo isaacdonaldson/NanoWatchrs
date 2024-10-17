@@ -1,39 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
+{% extends "base.html.jinja" %}
 
-    <title>NanoWatchrs</title>
-    <meta property="og:title" content="NanoWatchrs">
+{% block title %}
+    <title>{{ page.title }}</title>
+    <meta property="og:title" content="{{ page.title }}">
+{% endblock %}
 
-
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="author" content="NanoWatchrs">
-        <meta name="description" content="NanoWatchrs status page">
-        <meta property="og:description" content="NanoWatchrs status page">
-        <!-- <meta property="og:title" content="NanoWatchrs"> -->
-        <meta property="og:image" content="https://nanowatchrs.com/assets/img/logo.svg">
-        <meta property="og:url" content="https://status.nanowatchrs.com">
-        <meta property="og:site_name" content="NanoWatchrs">
-        <meta name="twitter:card" content="https://nanowatchrs.com/assets/img/logo.svg">
-        <meta name="twitter:image:alt" content="NanoWatchrs logo">
-        <link href="style.css?v=9" rel="stylesheet">
-        <link rel="icon" type="image/svg+xml" href="/favicon.ico">
-    </head>
-
-
+{% block body %}
 
 <label class="debug-toggle-label"><input type="checkbox" class="mode-toggle" /> Toggle Mode</label>
 
-<h1>NanoWatcrs</h1>
+<h1>{{ page.header }}</h1>
+
+{% for blk in status_blocks %}
+    {% include 'partials/status.html.jinja' %}
+{% endfor %}
 
 
-
-<table class="header">
+{#<table class="header">
     <tr>
         <td colspan="2" rowspan="2" class="width-auto">
             <h1 class="title">Backend API</h1>
-            <span class="subtitle">Payments & Billing</span>
+            <span class="subtitle">Checkouts, Billing, Disputes</span>
         </td>
         <th>Status</th>
         <td class="width-min">
@@ -45,16 +32,15 @@
     </tr>
     <tr>
         <th>Updated</th>
-        <td class="width-min"><time style="white-space: pre">2024-10-16 12:00:00</time></td>
+        <td class="width-min"><time style="white-space: pre">2024-08-26</time></td>
     </tr>
     <tr>
         <th class="width-auto">30 Days</th>
-        <td class="width-min history-line">|||||||||||||||||||||||||||</td>
+        <td class="width-min history-line">||||||||||||||||||||||||||||||||||||||||||</td>
         <th class="width-min">Uptime</th>
-        <td>99.99%%</td>
+        <td>99.9%</td>
     </tr>
 </table>
-
 
 <table class="header">
     <tr>
@@ -72,43 +58,41 @@
     </tr>
     <tr>
         <th>Updated</th>
-        <td class="width-min"><time style="white-space: pre">2024-10-16 12:00:00</time></td>
+        <td class="width-min"><time style="white-space: pre">2024-08-26</time></td>
     </tr>
     <tr>
         <th class="width-auto">30 Days</th>
-        <td class="width-min history-line">|||||||||||||||||||||||||||</td>
+        <td class="width-min font-bold warning">||||||||||||||||||||||||||||||||||||||||||</td>
         <th class="width-min">Uptime</th>
-        <td>97.32%%</td>
+        <td>96.2%</td>
     </tr>
 </table>
-
 
 <table class="header">
     <tr>
         <td colspan="2" rowspan="2" class="width-auto">
             <h1 class="title">Customer Portal</h1>
-            <span class="subtitle"></span>
+            <span class="subtitle">Customer Portal</span>
         </td>
         <th>Status</th>
         <td class="width-min">
             <div class="inline-row">
-                Issues
+                Errors
                 <span class="status-marker bg-danger"></span>
             </div>
         </td>
     </tr>
     <tr>
         <th>Updated</th>
-        <td class="width-min"><time style="white-space: pre">2024-10-16 12:00:00</time></td>
+        <td class="width-min"><time style="white-space: pre">2024-08-26</time></td>
     </tr>
     <tr>
         <th class="width-auto">30 Days</th>
-        <td class="width-min history-line">|||||||||||||||||||||||||||</td>
+        <td class="width-min font-bold danger">||||||||||||||||||||||||||||||||||||||||||</td>
         <th class="width-min">Uptime</th>
-        <td>82.04%%</td>
+        <td>89.7%</td>
     </tr>
 </table>
-
 
 <table class="header">
     <tr>
@@ -126,19 +110,15 @@
     </tr>
     <tr>
         <th>Updated</th>
-        <td class="width-min"><time style="white-space: pre">2024-10-16 12:00:00</time></td>
+        <td class="width-min"><time style="white-space: pre">2024-08-26</time></td>
     </tr>
     <tr>
         <th class="width-auto">30 Days</th>
-        <td class="width-min history-line">|||||||||||||||||||||||||||</td>
+        <td class="width-min font-bold failure">||||||||||||||||||||||||||||||||||||||||||</td>
         <th class="width-min">Uptime</th>
-        <td>74.15%%</td>
+        <td>74.1%</td>
     </tr>
-</table>
-
-
-
-
+</table>#}
 
 <hr />
 
@@ -200,5 +180,4 @@
 
 </pre>
 
-
-</html>
+{% endblock %}

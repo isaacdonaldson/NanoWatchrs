@@ -1,0 +1,50 @@
+{
+  "site": {
+    "name": "NanoWatchrs",
+    "description": "NanoWatchrs status page",
+    "url": "https://status.nanowatchrs.com",
+    "logo": "https://nanowatchrs.com/assets/img/logo.svg"
+  },
+  "page": {
+    "title": "NanoWatchrs",
+    "header": "NanoWatcrs"
+  },
+  "status_blocks": [
+    {
+      "title": "Backend API",
+      "subtitle": "Payments & Billing",
+      "status": "OK",
+      "state": "success",
+      "updated_at": "2024-10-16 12:00:00",
+      "history_line": "|||||||||||||||||||||||||||",
+      "uptime": "99.99%"
+    },
+    {
+      "title": "Website Application",
+      "subtitle": "User Portal, Web Interface",
+      "status": "Reports",
+      "state": "warning",
+      "updated_at": "2024-10-16 12:00:00",
+      "history_line": "|||||||||||||||||||||||||||",
+      "uptime": "97.32%"
+    },
+    {
+      "title": "Customer Portal",
+      "subtitle": "",
+      "status": "Issues",
+      "state": "danger",
+      "updated_at": "2024-10-16 12:00:00",
+      "history_line": "|||||||||||||||||||||||||||",
+      "uptime": "82.04%"
+    },
+    {
+      "title": "Notification System",
+      "subtitle": "Emails, SMS, Push Notifications",
+      "status": "Down",
+      "state": "failure",
+      "updated_at": "2024-10-16 12:00:00",
+      "history_line": "|||||||||||||||||||||||||||",
+      "uptime": "74.15%"
+    }
+  ]
+}

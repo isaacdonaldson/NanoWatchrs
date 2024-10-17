@@ -8,6 +8,8 @@
 - [ ] Option to specify favicon
 - [ ] Make sure box drawing diagrams work, and use shading ascii characters for box shadows? (look below)
 - [ ] Color of highlighted text should be custom
+- [ ] Button to report an incident?
+- [ ] Button to subscribe to updates?
 
 
 - [ ] Some super small amount of JS for allowing for nice features?

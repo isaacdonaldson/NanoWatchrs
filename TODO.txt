@@ -10,6 +10,9 @@
 - [ ] Color of highlighted text should be custom
 - [ ] Button to report an incident?
 - [ ] Button to subscribe to updates?
+- [ ] Calculate and store the history line and uptime etc...
+- [ ] Clickable incidents and individual incident pages??
+- [ ] Mobile view
 
 
 - [ ] Some super small amount of JS for allowing for nice features?

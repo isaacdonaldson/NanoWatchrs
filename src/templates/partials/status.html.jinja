@@ -19,7 +19,13 @@
     </tr>
     <tr>
         <th class="width-auto">30 Days</th>
-        <td class="width-min history-line">{{ blk.history_line }}</td>
+        <td class="width-min">
+            <div class="history-line">
+                {% for e in blk.history_line %}
+                    {% include 'partials/history_entry.html.jinja' %}
+                {% endfor %}
+            </div>
+        </td>
         <th class="width-min">Uptime</th>
         <td>{{ blk.uptime }}%</td>
     </tr>

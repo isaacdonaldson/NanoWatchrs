@@ -13,6 +13,9 @@
 - [ ] Calculate and store the history line and uptime etc...
 - [ ] Clickable incidents and individual incident pages??
 - [ ] Mobile view
+- [ ] CommitMono not loading properly?
+- [ ] More contrast on light colors
+- [ ] Cirlce gets cut off inside history entry popup
 
 
 - [ ] Some super small amount of JS for allowing for nice features?

@@ -33,7 +33,7 @@ Alternate '1':                "cv11": true
 
 @font-face {
   font-family: "CommitMono";
-  src: url("CommitMono.woff2") format("woff2");
+  src: url("/CommitMono.woff2") format("woff2");
 }
 
 :root {
@@ -56,10 +56,14 @@ Alternate '1':                "cv11": true
   --bg-dark: #212121; /* off-black */
   --link: #0d47a1; /* dark blue */
   --link-hover: #1266e2; /* light blue */
-  --success: #a9dc76; /* green */
-  --failure: #ff6188; /* red */
-  --warning: #ffd866; /* yellow */
-  --danger: #fc9867; /* orange */
+  --success-light: #a9dc76; /* green */
+  --success-dark: #98c66a; /* green */
+  --failure-light: #ff6188; /* red */
+  --failure-dark: #e5577a; /* red */
+  --warning-light: #ffd866; /* yellow */
+  --warning-dark: #e5c25b; /* yellow */
+  --danger-light: #fc9867; /* orange */
+  --danger-dark: #e2885c; /* orange */
 
   /* Variables */
   --border-radius: 5px;
@@ -75,9 +79,13 @@ Alternate '1':                "cv11": true
   --highlight-background-color: var(--danger);
   --button-background-hover: var(--bg-dark);
   --button-text-hover: var(--font-light);
+  --success: var(--success-dark);
+  --failure: var(--failure-dark);
+  --warning: var(--warning-dark);
+  --danger: var(--danger-dark);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background-color: var(--bg-dark);
     --text-color: var(--font-light);
@@ -86,8 +94,12 @@ Alternate '1':                "cv11": true
     --highlight-background-color: var(--warning);
     --button-background-hover: var(--bg-light);
     --button-text-hover: var(--font-dark);
+    --success: var(--success-light);
+    --failure: var(--failure-light);
+    --warning: var(--warning-light);
+    --danger: var(--danger-light);
   }
-}
+} */
 
 /* Reset */
 /* Box sizing and font smoothing */

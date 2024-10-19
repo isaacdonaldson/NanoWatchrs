@@ -16,7 +16,7 @@
       "status": "OK",
       "state": "success",
       "updated_at": "2024-10-16 12:00:00",
-      "uptime": "99.99%",
+      "uptime": "99.99",
       "history_line": [
         {
           "date": "2024-09-17",
@@ -176,7 +176,7 @@
       "status": "Reports",
       "state": "warning",
       "updated_at": "2024-10-16 12:00:00",
-      "uptime": "97.32%",
+      "uptime": "97.32",
       "history_line": [
         {
           "date": "2024-09-17",
@@ -336,7 +336,7 @@
       "status": "Issues",
       "state": "danger",
       "updated_at": "2024-10-16 12:00:00",
-      "uptime": "82.04%",
+      "uptime": "82.04",
       "history_line": [
         {
           "date": "2024-09-17",
@@ -496,7 +496,7 @@
       "status": "Down",
       "state": "failure",
       "updated_at": "2024-10-16 12:00:00",
-      "uptime": "74.15%",
+      "uptime": "74.15",
       "history_line": [
         {
           "date": "2024-09-17",

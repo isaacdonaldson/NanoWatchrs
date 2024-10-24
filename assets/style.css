@@ -64,6 +64,8 @@ Alternate '1':                "cv11": true
   --warning-dark: #e5c25b; /* yellow */
   --danger-light: #fc9867; /* orange */
   --danger-dark: #e2885c; /* orange */
+  --disabled-light: #939293; /* grey */
+  --disabled-dark: #474448; /* grey */
 
   /* Variables */
   --border-radius: 5px;
@@ -83,6 +85,7 @@ Alternate '1':                "cv11": true
   --failure: var(--failure-dark);
   --warning: var(--warning-dark);
   --danger: var(--danger-dark);
+  --disabled: var(--disabled-light);
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -98,6 +101,7 @@ Alternate '1':                "cv11": true
     --failure: var(--failure-light);
     --warning: var(--warning-light);
     --danger: var(--danger-light);
+    --disabled: var(--disabled-light);
   }
 } */
 
@@ -282,6 +286,7 @@ a:active,
 a.active {
   text-decoration: underline;
   color: var(--link-hover);
+  cursor: pointer;
 }
 
 a:link,
@@ -312,9 +317,9 @@ h2 {
 
 p {
   margin-bottom: var(--line-height);
-  word-break: break-word;
+  /* word-break: break-word;
   word-wrap: break-word;
-  hyphens: auto;
+  hyphens: auto; */
 }
 
 strong {
@@ -636,7 +641,21 @@ button:active {
 }
 
 /* Alternative Grid Layout using data-grid */
-[data-grid] {
+/* Usage Example
+<div data-grid="columns:12 gap:20px">
+  <div data-span="12" data-span-md="6" data-span-lg="4" style="background-color: #f0f0f0; padding: 1rem;">
+    Column 1
+  </div>
+  <div data-span="12" data-span-md="6" data-span-lg="4" style="background-color: #e0e0e0; padding: 1rem;">
+    Column 2
+  </div>
+  <div data-span="12" data-span-md="12" data-span-lg="4" style="background-color: #d0d0d0; padding: 1rem;">
+    Column 3
+  </div>
+</div>
+*/
+
+/* [data-grid] {
   display: grid;
   grid-template-columns: repeat(var(--grid-columns, 12), 1fr);
   gap: var(--grid-gap, 1rem);
@@ -656,21 +675,49 @@ button:active {
   [data-grid] > * {
     grid-column: span var(--span-lg, var(--span-md, var(--span, 12)));
   }
+} */
+
+.desktop {
+  display: block;
 }
 
-/* Usage Example
-<div data-grid="columns:12 gap:20px">
-  <div data-span="12" data-span-md="6" data-span-lg="4" style="background-color: #f0f0f0; padding: 1rem;">
-    Column 1
-  </div>
-  <div data-span="12" data-span-md="6" data-span-lg="4" style="background-color: #e0e0e0; padding: 1rem;">
-    Column 2
-  </div>
-  <div data-span="12" data-span-md="12" data-span-lg="4" style="background-color: #d0d0d0; padding: 1rem;">
-    Column 3
-  </div>
-</div>
-*/
+.tablet {
+  display: none;
+}
+
+.mobile {
+  display: none;
+}
+
+/* Tablet Size */
+@media (max-width: 771px) and (min-width: 560px) {
+  .desktop {
+    display: none;
+  }
+
+  .tablet {
+    display: block;
+  }
+
+  .mobile {
+    display: none;
+  }
+}
+
+/* Mobile Size */
+@media (max-width: 559px) {
+  .desktop {
+    display: none;
+  }
+
+  .tablet {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+}
 
 /* Utility Classes */
 .inline-row {
@@ -735,6 +782,14 @@ button:active {
   background-color: var(--failure);
 }
 
+.disabled {
+  color: var(--disabled);
+}
+
+.bg-disabled {
+  background-color: var(--disabled);
+}
+
 /* Hover Popup */
 /* Hover Popup */
 .popup-container {
@@ -788,12 +843,13 @@ button:active {
 .history-line {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   gap: calc(var(--border-thickness) * 2);
 }
 
 .history-marker {
   width: calc(var(--border-thickness) * 2);
+  margin-top: 0;
 }
 
 .entry-date {
@@ -809,4 +865,11 @@ button:active {
 
 .entry-notes {
   margin-top: 0;
+}
+
+.footer-box {
+  position: absolute;
+  left: calc(50% - 48ch / 2);
+  font-size: 0.7rem;
+  line-height: 1.2;
 }

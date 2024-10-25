@@ -1,13 +1,13 @@
 {
   "site": {
-    "name": "NanoWatchrs",
+    "name": "NanoWatchrs Status",
     "description": "NanoWatchrs status page",
     "url": "https://status.nanowatchrs.com",
     "logo": "https://nanowatchrs.com/assets/img/logo.svg"
   },
   "page": {
-    "title": "NanoWatchrs",
-    "header": "NanoWatcrs"
+    "title": "NanoWatchrs Status",
+    "header": "NanoWatcrs Status"
   },
   "status_blocks": [
     {

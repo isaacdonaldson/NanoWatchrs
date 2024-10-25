@@ -17,6 +17,11 @@
 - [ ] More contrast on light colors
 - [ ] Cirlce gets cut off inside history entry popup
 
+- [ ] Add in reading and then performing checks from checks.json
+- [ ] Display incident content from incidents.json
+- [ ] While running the checks, write to history.json and use that to create the history line instead of basic.json/config.json
+- [ ] Think about collapsing checks, incidents and basic into one file, and have the program add to history.json
+
 
 - [ ] Some super small amount of JS for allowing for nice features?
 - [ ] Show percentages of uptime based on history

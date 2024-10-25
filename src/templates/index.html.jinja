@@ -7,13 +7,9 @@
 
 {% block body %}
 
-<label class="debug-toggle-label"><input type="checkbox" class="mode-toggle" /> Toggle Mode</label>
-
 <h1>{{ page.header }}</h1>
 
-{% for blk in status_blocks %}
-    {% include 'partials/status.html.jinja' %}
-{% endfor %}
+{{rendered_status_blocks}}
 
 <hr />
 

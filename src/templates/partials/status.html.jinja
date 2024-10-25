@@ -2,31 +2,31 @@
 <table class="header">
     <tr>
         <td colspan="2" rowspan="2" class="width-auto">
-            <h1 class="title">{{ blk.title }}</h1>
-            <span class="subtitle">{{ blk.subtitle }}</span>
+            <h1 class="title">{{ title }}</h1>
+            <span class="subtitle">{{ subtitle }}</span>
         </td>
         <th>Status</th>
         <td class="width-min">
             <div class="inline-row">
-                {{ blk.status }}
-                <span class="status-marker bg-{{ blk.state }}"></span>
+                {{ status }}
+                <span class="status-marker bg-{{ state }}"></span>
             </div>
         </td>
     </tr>
     <tr>
         <th>Updated</th>
-        <td class="width-min"><time style="white-space: pre">{{ blk.updated_at }}</time></td>
+        <td class="width-min"><time style="white-space: pre">{{ updated_at }}</time></td>
     </tr>
     <tr>
         <th class="width-auto">30 Days</th>
         <td class="width-min">
             <div class="history-line">
-                {% for e in blk.history_line %}
+                {% for e in history_line %}
                     {% include 'partials/history_entry.html.jinja' %}
                 {% endfor %}
             </div>
         </td>
         <th class="width-min">Uptime</th>
-        <td>{{ blk.uptime }}%</td>
+        <td>{{ uptime }}%</td>
     </tr>
 </table>

@@ -848,7 +848,7 @@ button:active {
 }
 
 .history-marker {
-  width: calc(var(--border-thickness) * 2);
+  width: calc(var(--border-thickness) * 3);
   margin-top: 0;
 }
 

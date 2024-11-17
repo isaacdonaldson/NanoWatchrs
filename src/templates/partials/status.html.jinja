@@ -18,11 +18,11 @@
         <td class="width-min"><time style="white-space: pre">{{ updated_at }}</time></td>
     </tr>
     <tr>
-        <th class="width-auto">30 Days</th>
+        <th class="width-auto">{{history_line | length}} Days</th>
         <td class="width-min">
             <div class="history-line">
                 {% for e in history_line %}
-                    {% include 'partials/history_entry.html.jinja' %}
+                {% include 'partials/history_entry.html.jinja' %}
                 {% endfor %}
             </div>
         </td>

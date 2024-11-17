@@ -9,9 +9,10 @@
 
 <h1>{{ page.header }}</h1>
 
-{{rendered_status_blocks}}
+{{rendered_blocks}}
 
 <hr />
+Incident History
 
 <pre>
 ╔═════History══════╗
@@ -21,5 +22,7 @@
 ╚══════════════════╝░
  ░░░░░░░░░░░░░░░░░░░░
 </pre>
+
+{{ incidents }}
 
 {% endblock %}

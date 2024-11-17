@@ -1,0 +1,60 @@
+{
+  "settings": {
+    "site": {
+      "name": "NanoWatchrs Status",
+      "description": "NanoWatchrs status page",
+      "url": "https://status.nanowatchrs.com",
+      "logo": "https://nanowatchrs.com/assets/img/logo.svg"
+    },
+    "page": {
+      "title": "NanoWatchrs Status",
+      "header": "NanoWatcrs Status"
+    }
+  },
+  "checks": [
+    {
+      "name": "Backend API",
+      "description": "Payments & Billing",
+      "type": "http",
+      "target": "https://example.com",
+      "page_link": "https://example.com",
+      "expected_status": 200,
+      "timeout_ms": 5000,
+      "polling_interval": 10000
+    },
+    {
+      "name": "Domain",
+      "type": "ping",
+      "target": "www.example.com",
+      "page_link": "https://example.com",
+      "timeout_ms": 5000,
+      "polling_interval": 10000
+    },
+    {
+      "name": "Database Connection",
+      "type": "port",
+      "target": "db.example.com",
+      "port": 5432,
+      "timeout_ms": 5000,
+      "polling_interval": 60000
+    }
+  ],
+  "incidents": [
+    {
+      "title": "Planned DB Maintenance",
+      "description": "Between 10:00 and 11:00 UTC on October 22nd, we will be performing maintenance on our database.",
+      "status": "resolved",
+      "display_date": "2024-10-22",
+      "started_at": "2024-10-22 10:00:00",
+      "resolved_at": "2024-10-22 11:00:00"
+    },
+    {
+      "title": "Backend API Outage",
+      "description": "We encountered an issue with the backend API and quickly resolved it.",
+      "status": "resolved",
+      "display_date": "2024-10-22",
+      "started_at": "2024-10-22 11:32:12",
+      "resolved_at": "2024-10-22 11:32:12"
+    }
+  ]
+}

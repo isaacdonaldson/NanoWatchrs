@@ -1,43 +1,18 @@
-- [ ] Light and Dark themes respecting preferences (with toggle?)
-- [ ] Target Super small, lean, and fast
-- [ ] Customizable templates for the different aspects of the page
-- [ ] Monospace design that does not need JS (monospace web, Berkeley mono)
-- [ ] As little dependencies as possible, and as small as possible
-- [ ] Show the last time the page was updated
-- [ ] Have option to set output to a location (S3?), or to a file other than `/dist`
-- [ ] Option to specify favicon
-- [ ] Make sure box drawing diagrams work, and use shading ascii characters for box shadows? (look below)
-- [ ] Color of highlighted text should be custom
-- [ ] Button to report an incident?
-- [ ] Button to subscribe to updates?
-- [ ] Calculate and store the history line and uptime etc...
-- [ ] Clickable incidents and individual incident pages??
-- [ ] Mobile view
-- [ ] CommitMono not loading properly?
-- [ ] More contrast on light colors
+- [ ] Change the history to have a file for each check?
+- [x] Fill in missing incidents with n/a or something
+- [ ] Incident log page
 - [ ] Cirlce gets cut off inside history entry popup
-
-- [ ] Add in reading and then performing checks from checks.json
-- [ ] Display incident content from incidents.json
-- [ ] While running the checks, write to history.json and use that to create the history line instead of basic.json/config.json
-- [ ] Think about collapsing checks, incidents and basic into one file, and have the program add to history.json
+- [ ] Bring in loco-rs.gg css changes for mobile and such
 
 
-- [ ] Some super small amount of JS for allowing for nice features?
-- [ ] Show percentages of uptime based on history
+- [ ] Light and dark themes
 - [ ] Have examples of running as a native binary/cron job, as well as running on lambda/cloudflare worker
-- [ ] Mobile friendly
+- [ ] Option to have generated files in a different location (S3 option)
+- [ ] Have a favicon
+- [ ] Report incidents & subscribe to events
 - [ ] Time since last incident poster with running clock (Joke)
 - [ ] Css minifier?
 
-
-CSS
-- [ ] Box drawing
-- [ ] Shading ASCII
-- [ ] Highlighting
-- [ ] Monospace settings
-- [ ] Grid layouts like monospace
-- [ ] Toggle light and dark mode
 
 
 

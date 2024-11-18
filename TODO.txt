@@ -1,8 +1,10 @@
+- [ ] Bring in loco-rs.gg css changes for mobile and such
+- [ ] Implement the checking system
+- [ ] Make it so the args passed in are what checks are run, and cron is done externally
 - [ ] Change the history to have a file for each check?
 - [x] Fill in missing incidents with n/a or something
 - [ ] Incident log page
 - [ ] Cirlce gets cut off inside history entry popup
-- [ ] Bring in loco-rs.gg css changes for mobile and such
 
 
 - [ ] Light and dark themes

@@ -19,24 +19,21 @@
       "target": "https://example.com",
       "page_link": "https://example.com",
       "expected_status": 200,
-      "timeout_ms": 5000,
-      "polling_interval": 10000
+      "timeout_ms": 5000
     },
     {
       "name": "Domain",
       "type": "ping",
       "target": "www.example.com",
       "page_link": "https://example.com",
-      "timeout_ms": 5000,
-      "polling_interval": 10000
+      "timeout_ms": 5000
     },
     {
       "name": "Database Connection",
       "type": "port",
       "target": "db.example.com",
       "port": 5432,
-      "timeout_ms": 5000,
-      "polling_interval": 60000
+      "timeout_ms": 5000
     }
   ],
   "incidents": [

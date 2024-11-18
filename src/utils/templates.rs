@@ -33,7 +33,7 @@ pub fn render_status_block<'a>(
     let mut history = history_section
         .entries
         .iter()
-        .filter(|entry| entry.date > date_cutoff.date())
+        .filter(|entry| entry.date >= date_cutoff.date())
         .map(|entry| entry.to_owned())
         .map(|entry| {
             if entry.state != State::Success {
@@ -51,11 +51,11 @@ pub fn render_status_block<'a>(
     if history.len() < HISTORY_LENGTH as usize {
         for _ in 0..(HISTORY_LENGTH - history.len()) {
             let date = Utc::now().naive_utc() - chrono::Duration::days(history.len() as i64);
-            history.push(HistoryEntry::default_for_date(date.date()));
+            history.insert(0, HistoryEntry::default_for_date(date.date()));
         }
     }
 
-    let state = match history.first() {
+    let state = match history.last() {
         Some(entry) => entry.state.clone(),
         None => State::Disabled,
     };
@@ -69,7 +69,7 @@ pub fn render_status_block<'a>(
         state => state.to_state(),
         updated_at => history_section.last_updated.format(LONG_DATE_FORMAT).to_string(),
         uptime => format!("{:.02}", uptime),
-        history_line => history.iter().rev().collect::<Vec<&HistoryEntry>>(),
+        history_line => history,
     };
 
     let template = env.get_template("partials/status.html.jinja")?;

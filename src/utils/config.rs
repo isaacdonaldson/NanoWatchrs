@@ -2,7 +2,7 @@ use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 
 use crate::Result;
-use crate::{long_date_format, HistoryEntry, StatusPageContext};
+use crate::{long_date_format, HistoryEntry, StatusPageContext, HISTORY_PATH};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct HistoryFile {
@@ -30,16 +30,16 @@ pub fn read_history_file(history_path: &str) -> Result<HistoryFile> {
     Ok(history)
 }
 
-pub fn write_history_file(history_path: &str, history: &HistoryFile) -> Result<()> {
+pub fn write_history_file(history: &HistoryFile) -> Result<()> {
     let history_json = serde_json::to_string(&history)?;
-    std::fs::write(history_path, history_json)?;
+    std::fs::write(HISTORY_PATH, history_json)?;
     Ok(())
 }
 
 // History is stored so the newest entry is at the end of the array
-pub fn append_history_event(history_path: &str, section: &str, event: HistoryEntry) -> Result<()> {
+pub fn append_history_event(section: &str, event: HistoryEntry) -> Result<()> {
     // We want to mutate to add because a copy could be really expensive
-    let mut history = read_history_file(history_path)?;
+    let mut history = read_history_file(HISTORY_PATH)?;
     history
         .watchers
         .iter_mut()
@@ -48,5 +48,6 @@ pub fn append_history_event(history_path: &str, section: &str, event: HistoryEnt
         .entries
         .push(event);
 
+    write_history_file(&history)?;
     Ok(())
 }

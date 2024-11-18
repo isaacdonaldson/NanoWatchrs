@@ -130,7 +130,6 @@ pub struct Check {
     pub page_link: Option<String>,
     pub expected_status: Option<u16>,
     pub timeout_ms: u64,
-    pub polling_interval: u64,
     #[serde(rename = "type")]
     pub check_type: CheckType,
     pub port: Option<u16>,

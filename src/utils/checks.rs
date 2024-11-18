@@ -1,30 +1,27 @@
-use crate::Result;
+use crate::utils::config::append_history_event;
 use crate::{Check, CheckResult, CheckType};
-// {
-//      "name": "Backend API",
-//      "type": "http",
-//      "target": "https://example.com",
-//      "page_link": "https://example.com",
-//      "expected_status": 200,
-//      "timeout_ms": 5000,
-//      "polling_interval": 10000
-//    },
-//    {
-//      "name": "Domain",
-//      "type": "ping",
-//      "target": "www.example.com",
-//      "page_link": "https://example.com",
-//      "timeout_ms": 5000,
-//      "polling_interval": 10000
-//    },
-//    {
-//      "name": "Database Connection",
-//      "type": "port",
-//      "target": "db.example.com",
-//      "port": 5432,
-//      "timeout_ms": 5000,
-//      "polling_interval": 60000
-//    }
+use crate::{HistoryEntry, Result, State};
+
+pub async fn run_check(check: &Check) -> Result<CheckResult> {
+    let timeout = std::time::Duration::from_millis(check.timeout_ms);
+
+    let result = tokio::time::timeout(timeout, perform_check(check)).await?;
+
+    match result {
+        // Write to history file
+        Ok(CheckResult::Success) => {
+            // TODO: Only append if the last entry is a worse status
+            // or if the last entry is a different date
+            append_history_event(
+                check.name.as_str(),
+                HistoryEntry::new_today(State::Success, "No Incident".into()),
+            )?;
+            Ok(CheckResult::Success)
+        }
+        Ok(CheckResult::Failure) => return Ok(CheckResult::Failure),
+        Err(_) => return Ok(CheckResult::Failure),
+    }
+}
 
 pub async fn perform_check(check: &Check) -> Result<CheckResult> {
     let start_time = chrono::Utc::now();
@@ -40,7 +37,6 @@ pub async fn perform_check(check: &Check) -> Result<CheckResult> {
             Ok(result)
         }
         Err(err) => {
-            // TODO: Log error to history file
             eprintln!("Error performing check: {:?}", err);
             Ok(CheckResult::Failure)
         }

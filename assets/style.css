@@ -289,10 +289,10 @@ a.active {
   cursor: pointer;
 }
 
-a:link,
+/* a:link,
 a:visited {
   color: var(--text-color);
-}
+} */
 
 /* Text Styling*/
 h1,
@@ -848,22 +848,7 @@ button:active {
 }
 
 .history-marker {
-  width: calc(var(--border-thickness) * 3);
-  margin-top: 0;
-}
-
-.entry-date {
-  color: var(--text-color-alt);
-}
-
-.entry-content {
-  margin-top: 1ch;
-  display: flex;
-  flex-direction: row;
-  gap: 1ch;
-}
-
-.entry-notes {
+  width: calc(var(--border-thickness) * 2);
   margin-top: 0;
 }
 

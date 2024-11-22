@@ -1,5 +1,5 @@
 
-<table class="header">
+<table class="header desktop">
     <tr>
         <td colspan="2" rowspan="2" class="width-auto">
             <h1 class="title">{{ title }}</h1>
@@ -15,7 +15,10 @@
     </tr>
     <tr>
         <th>Updated</th>
-        <td class="width-min"><time style="white-space: pre">{{ updated_at }}</time></td>
+        <td class="width-min">
+            <time style="white-space: pre">{{ updated_at | date }}</time>
+            <time style="white-space: pre">{{ updated_at | time }}</time>
+        </td>
     </tr>
     <tr>
         <th class="width-auto">{{history_line | length}} Days</th>
@@ -28,5 +31,64 @@
         </td>
         <th class="width-min">Uptime</th>
         <td>{{ uptime }}%</td>
+    </tr>
+</table>
+
+
+<table class="header tablet">
+    <tr>
+        <td colspan="2" rowspan="2" class="width-auto">
+            <h1 class="title">{{ title }}</h1>
+            <span class="subtitle">{{ subtitle }}</span>
+        </td>
+        <th>Status</th>
+        <td class="width-min">
+            <div class="inline-row">
+                {{ status }}
+                <span class="status-marker bg-{{ state }}"></span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td class="width-min">
+            <time style="white-space: pre">{{ updated_at | date }}</time>
+            <time style="white-space: pre">{{ updated_at | time }}</time>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="width-min">
+            <div class="history-line">
+                {% for e in history_line %}
+                {% include 'partials/history_entry.html.jinja' %}
+                {% endfor %}
+            </div>
+        </td>
+        <th class="width-min">Uptime</th>
+        <td>{{ uptime }}%</td>
+    </tr>
+</table>
+
+<table class="header mobile">
+    <tr>
+        <td colspan="3" class="width-auto" style="text-align: left;">
+            <h1 class="title">{{ title }}</h1>
+            <span class="subtitle">{{ subtitle }}</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="width-auto">
+            <time style="white-space: pre">{{ updated_at | date }}</time>
+            @
+            <time style="white-space: pre">{{ updated_at | time }}</time>
+        </td>
+        <td class="width-min" style="text-align: right;">{{ uptime }}%</td>
+        <td class="width-min" style="padding-left: 2ch">
+
+            <div class="inline-row">
+                {{ status }}
+                <span class="status-marker bg-{{ state }}" style="padding-left: 5ch"></span>
+            </div>
+        </td>
     </tr>
 </table>

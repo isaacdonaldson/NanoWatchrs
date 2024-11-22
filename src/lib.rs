@@ -6,6 +6,7 @@ pub mod utils;
 pub const ASSETS_PATH: &'static str = "assets";
 pub const CONFIG_PATH: &'static str = "examples/config.json";
 pub const DATE_FORMAT: &'static str = "%Y-%m-%d";
+pub const TIME_FORMAT: &'static str = "%H:%M:%S";
 pub const LONG_DATE_FORMAT: &'static str = "%Y-%m-%d %H:%M:%S";
 pub const HISTORY_PATH: &'static str = "examples/history.json";
 pub const HISTORY_LENGTH: usize = 30;
@@ -55,7 +56,7 @@ pub struct StatusBlock {
 #[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum State {
-    #[serde(rename(deserialize = "unknown"))]
+    #[serde(rename = "unknown")]
     Disabled,
     Success,
     Warning,

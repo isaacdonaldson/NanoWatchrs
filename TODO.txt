@@ -6,6 +6,8 @@
 - [ ] Incident log page
 - [ ] Cirlce gets cut off inside history entry popup
 - [ ] Either have separate history files, or have a mutex on them
+- [ ] Logo and linking added to html generation
+- [ ] Add logging of runtime checks and errors
 
 
 - [ ] Light and dark themes

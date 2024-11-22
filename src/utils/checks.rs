@@ -1,6 +1,7 @@
-use crate::utils::config::append_history_event;
 use crate::{Check, CheckResult, CheckType};
 use crate::{HistoryEntry, Result, State};
+
+use super::config::update_history_section;
 
 pub async fn run_check(check: &Check) -> Result<CheckResult> {
     let timeout = std::time::Duration::from_millis(check.timeout_ms);
@@ -10,16 +11,39 @@ pub async fn run_check(check: &Check) -> Result<CheckResult> {
     match result {
         // Write to history file
         Ok(CheckResult::Success) => {
-            // TODO: Only append if the last entry is a worse status
-            // or if the last entry is a different date
-            append_history_event(
+            // This function takes care of only writing additions based on some rules
+            update_history_section(
                 check.name.as_str(),
                 HistoryEntry::new_today(State::Success, "No Incident".into()),
             )?;
             Ok(CheckResult::Success)
         }
-        Ok(CheckResult::Failure) => return Ok(CheckResult::Failure),
-        Err(_) => return Ok(CheckResult::Failure),
+        Ok(CheckResult::Failure(state)) => {
+            let history_entry = match state {
+                State::Failure => {
+                    HistoryEntry::new_today(State::Failure, "Ongoing Incident".into())
+                }
+                State::Danger => {
+                    HistoryEntry::new_today(State::Danger, "Potential Outage or Issue".into())
+                }
+                State::Warning => {
+                    HistoryEntry::new_today(State::Warning, "Degraded Performance".into())
+                }
+                State::Disabled => {
+                    HistoryEntry::new_today(State::Disabled, "Information N/A".into())
+                }
+                _ => unreachable!("There is a state returned from a check that doesn't make sense"),
+            };
+
+            update_history_section(check.name.as_str(), history_entry)?;
+            Ok(CheckResult::Failure(state))
+        }
+        Err(_) => {
+            // If there is an error with the checking program we don't want that recorded
+            // as an incident in the history file
+            Ok(CheckResult::Unknown)
+        }
+        _ => unreachable!("Getting a result from a check that doesn't make sense"),
     }
 }
 
@@ -38,7 +62,7 @@ pub async fn perform_check(check: &Check) -> Result<CheckResult> {
         }
         Err(err) => {
             eprintln!("Error performing check: {:?}", err);
-            Ok(CheckResult::Failure)
+            Ok(CheckResult::Unknown)
         }
     }
 }
@@ -48,10 +72,27 @@ pub async fn perform_http_check(check: &Check) -> Result<CheckResult> {
     let status = response.status().as_u16();
     let expected_status = check.expected_status.unwrap_or(200);
 
+    // This is the only success case
     if status == expected_status {
-        Ok(CheckResult::Success)
-    } else {
-        Ok(CheckResult::Failure)
+        return Ok(CheckResult::Success);
+    }
+
+    // These are all failure cases
+    match status {
+        301 | 302 | 303 => Ok(CheckResult::Failure(State::Warning)),
+        308 => Ok(CheckResult::Failure(State::Danger)),
+        401 => Ok(CheckResult::Failure(State::Warning)),
+        400 => Ok(CheckResult::Failure(State::Warning)),
+        403 => Ok(CheckResult::Failure(State::Warning)),
+        404 => Ok(CheckResult::Failure(State::Danger)),
+        405 => Ok(CheckResult::Failure(State::Danger)),
+        422 => Ok(CheckResult::Failure(State::Warning)),
+        429 => Ok(CheckResult::Failure(State::Warning)),
+        500 => Ok(CheckResult::Failure(State::Failure)),
+        // 5xx status codes are considered failures?
+        _ if status >= 500 => Ok(CheckResult::Failure(State::Failure)),
+        // Any other status code is considered a danger (mid between warning and failure)
+        _ => Ok(CheckResult::Failure(State::Danger)),
     }
 }
 
@@ -64,9 +105,11 @@ pub fn perform_ping_check(check: &Check) -> Result<CheckResult> {
         .arg(&check.target)
         .output();
 
+    // There is not a well defined granularity for ping checks
+    // and no support to specify them (yet?)
     match output {
         Ok(_) => Ok(CheckResult::Success),
-        Err(_) => Ok(CheckResult::Failure),
+        Err(_) => Ok(CheckResult::Failure(State::Danger)),
     }
 }
 
@@ -74,8 +117,10 @@ pub async fn perform_port_check(check: &Check) -> Result<CheckResult> {
     let target = format!("{}:{}", check.target, check.port.unwrap());
     let output = tokio::net::TcpStream::connect(&target).await;
 
+    // There is not a well defined granularity for port checks
+    // and no support to specify them (yet?)
     match output {
         Ok(_) => Ok(CheckResult::Success),
-        Err(_) => Ok(CheckResult::Failure),
+        Err(_) => Ok(CheckResult::Failure(State::Danger)),
     }
 }

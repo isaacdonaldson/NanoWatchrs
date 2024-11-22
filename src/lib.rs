@@ -147,7 +147,8 @@ pub enum CheckType {
 #[serde(rename_all = "lowercase")]
 pub enum CheckResult {
     Success,
-    Failure,
+    Failure(State),
+    Unknown,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]

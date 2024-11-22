@@ -31,7 +31,7 @@
     {
       "name": "Database Connection",
       "type": "port",
-      "target": "db.example.com",
+      "target": "localhost",
       "port": 5432,
       "timeout_ms": 5000
     }

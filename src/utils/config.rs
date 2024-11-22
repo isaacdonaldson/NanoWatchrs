@@ -31,7 +31,7 @@ pub fn read_history_file(history_path: &str) -> Result<HistoryFile> {
 }
 
 pub fn write_history_file(history: &HistoryFile) -> Result<()> {
-    let history_json = serde_json::to_string(&history)?;
+    let history_json = serde_json::to_string_pretty(&history)?;
     std::fs::write(HISTORY_PATH, history_json)?;
     Ok(())
 }

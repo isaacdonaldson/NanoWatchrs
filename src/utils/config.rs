@@ -2,7 +2,7 @@ use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 
 use crate::Result;
-use crate::{long_date_format, HistoryEntry, StatusPageContext, HISTORY_PATH};
+use crate::{long_date_format, HistoryEntry, State, StatusPageContext, HISTORY_PATH};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct HistoryFile {
@@ -47,6 +47,59 @@ pub fn append_history_event(section: &str, event: HistoryEntry) -> Result<()> {
         .expect(format!("History section {} could not be found", section).as_str())
         .entries
         .push(event);
+
+    write_history_file(&history)?;
+    Ok(())
+}
+
+pub fn update_history_section(section: &str, event: HistoryEntry) -> Result<()> {
+    let mut history = read_history_file(HISTORY_PATH)?;
+    let section = history
+        .watchers
+        .iter_mut()
+        .find(|w| w.name == section)
+        .expect(format!("History section {} could not be found", section).as_str());
+    section.last_updated = chrono::Utc::now().naive_utc();
+
+    match section.entries.last() {
+        None => section.entries.push(event),
+        Some(e) => {
+            if e.date != event.date {
+                section.entries.push(event);
+            } else {
+                match (&e.state, &event.state) {
+                    // Do nothing if both at success
+                    (State::Success, State::Success) => (),
+                    // If the old event was success and the new event is not, replace it
+                    (State::Success, _) => {
+                        section.entries.pop();
+                        section.entries.push(event)
+                    }
+                    // If the old event was disabled and the new event is not, replace it
+                    (State::Disabled, _) => {
+                        section.entries.pop();
+                        section.entries.push(event);
+                    }
+                    // We want a warning to be replaced by a danger
+                    (State::Warning, State::Danger) => {
+                        section.entries.pop();
+                        section.entries.push(event);
+                    }
+                    // We want a warning to be replaced by a failure
+                    (State::Warning, State::Failure) => {
+                        section.entries.pop();
+                        section.entries.push(event);
+                    }
+                    // We want a danger to be replaced by a failure
+                    (State::Danger, State::Failure) => {
+                        section.entries.pop();
+                        section.entries.push(event);
+                    }
+                    _ => {}
+                };
+            }
+        }
+    };
 
     write_history_file(&history)?;
     Ok(())

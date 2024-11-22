@@ -68,7 +68,11 @@ pub async fn perform_check(check: &Check) -> Result<CheckResult> {
 }
 
 pub async fn perform_http_check(check: &Check) -> Result<CheckResult> {
-    let response = reqwest::get(&check.target).await?;
+    let response = match reqwest::get(&check.target).await {
+        Ok(response) => response,
+        Err(_) => return Ok(CheckResult::Failure(State::Danger)),
+    };
+
     let status = response.status().as_u16();
     let expected_status = check.expected_status.unwrap_or(200);
 

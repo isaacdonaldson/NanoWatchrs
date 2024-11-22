@@ -1,15 +1,36 @@
-use chrono::Utc;
+use chrono::{NaiveDateTime, Utc};
 use minijinja::{context, path_loader, Environment};
 
 use std::fs;
 
 use crate::utils::config::HistorySection;
-use crate::{Check, HistoryEntry, Result, State, ASSETS_PATH, HISTORY_LENGTH, LONG_DATE_FORMAT};
+use crate::{
+    Check, HistoryEntry, Result, State, ASSETS_PATH, DATE_FORMAT, HISTORY_LENGTH, LONG_DATE_FORMAT,
+    TIME_FORMAT,
+};
+
+fn date(date_str: &str) -> String {
+    match NaiveDateTime::parse_from_str(&date_str, LONG_DATE_FORMAT) {
+        Ok(date) => date.format(DATE_FORMAT).to_string(),
+        Err(_) => date_str.to_owned(),
+    }
+}
+
+fn time(date_str: &str) -> String {
+    match NaiveDateTime::parse_from_str(&date_str, LONG_DATE_FORMAT) {
+        Ok(date) => date.format(TIME_FORMAT).to_string(),
+        Err(_) => date_str.to_owned(),
+    }
+}
 
 pub fn create_env<'a>() -> Environment<'a> {
     let mut env = Environment::new();
     // Load the templates from the src/templates directory
     env.set_loader(path_loader("src/templates"));
+
+    // Add custom filters
+    env.add_filter("date", date);
+    env.add_filter("time", time);
 
     return env;
 }
@@ -74,5 +95,13 @@ pub fn render_status_block<'a>(
 
     let template = env.get_template("partials/status.html.jinja")?;
 
-    Ok(template.render(context)?)
+    let rendered = template.render(context);
+
+    match rendered {
+        Ok(rendered) => Ok(rendered),
+        Err(e) => {
+            eprintln!("Template Render Error: {:#?}", e);
+            Err(e.into())
+        }
+    }
 }

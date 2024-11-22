@@ -33,7 +33,7 @@ async fn main() -> Result<()> {
 
     for check in &config.checks {
         println!("Running check '{}'", check.name);
-        // let _ = run_check(check).await?;
+        let _ = run_check(check).await?;
     }
 
     run_template_rendering(&config)?;

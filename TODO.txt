@@ -1,16 +1,16 @@
-- [ ] Bring in loco-rs.gg css changes for mobile and such
-- [ ] Implement the checking system
-- [ ] Make it so the args passed in are what checks are run, and cron is done externally
+- [x] Bring in loco-rs.gg css changes for mobile and such
+- [x] Implement the checking system
+- [x] Make it so the args passed in are what checks are run, and cron is done externally
 - [ ] Change the history to have a file for each check?
 - [x] Fill in missing incidents with n/a or something
 - [ ] Incident log page
-- [ ] Cirlce gets cut off inside history entry popup
+- [ ] Circle not showing up and gets cut off inside history entry popup
 - [ ] Either have separate history files, or have a mutex on them
 - [ ] Logo and linking added to html generation
 - [ ] Add logging of runtime checks and errors
 
 
-- [ ] Light and dark themes
+- [ ] Light and dark themes ( and toggle)
 - [ ] Have examples of running as a native binary/cron job, as well as running on lambda/cloudflare worker
 - [ ] Have disclaimer about ping and TCP not being possible from Cloudflare workers
 - [ ] Option to have generated files in a different location (S3 option)

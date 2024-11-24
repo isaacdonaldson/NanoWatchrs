@@ -1,0 +1,23 @@
+<table>
+    <thead>
+        <tr>
+            <th class="width-auto">{{ title }}</th>
+            {% if state %}
+                <th class="width-min">
+                    <div class="inline-row">
+                        {{ status }}
+                        <span class="status-marker bg-{{ state }}" style="margin-left: 1ch;"></span>
+                    </div>
+                </th>
+            {% else %}
+                <th class="width-min">{{ status }}</th>
+            {% endif %}
+            <th class="width-min"> {{ display_date }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="3" style="white-space: pre-wrap;">{{ description }}</td>
+        </tr>
+    </tbody>
+</table>

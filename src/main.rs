@@ -5,7 +5,7 @@ use std::collections::HashMap;
 
 use nanowatchrs::utils::config::{read_config_file, read_history_file, HistorySection};
 use nanowatchrs::utils::templates::{
-    create_env, render_status_block, write_string_to_asset_folder,
+    create_env, render_incident, render_status_block, write_string_to_asset_folder,
 };
 use nanowatchrs::{Result, StatusPageContext};
 use nanowatchrs::{CONFIG_PATH, HISTORY_PATH};
@@ -72,11 +72,24 @@ fn run_template_rendering(config: &StatusPageContext) -> Result<()> {
         return Err("Error rendering status blocks".into());
     }
 
+    let incident_rendering = config
+        .incidents
+        .iter()
+        .filter_map(|incident| match render_incident(&env, incident) {
+            Err(e) => {
+                println!("Error rendering incident '{}': '{:#?}'", incident.title, e);
+                None
+            }
+            Ok(template) => Some(template),
+        })
+        .reduce(|a, b| format!("{}\n{}", a, b));
+
     let context = context! {
         site => config.settings.site,
         page => config.settings.page,
         incidents => format!("{:#?}", config.incidents),
         rendered_blocks => status_blocks.unwrap(),
+        incidents => incident_rendering.unwrap(),
     };
 
     let _ = write_string_to_asset_folder("index.html", &template.render(context)?);

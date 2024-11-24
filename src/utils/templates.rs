@@ -5,8 +5,8 @@ use std::fs;
 
 use crate::utils::config::HistorySection;
 use crate::{
-    Check, HistoryEntry, Result, State, ASSETS_PATH, DATE_FORMAT, HISTORY_LENGTH, LONG_DATE_FORMAT,
-    TIME_FORMAT,
+    Check, HistoryEntry, Incident, Result, State, ASSETS_PATH, DATE_FORMAT, HISTORY_LENGTH,
+    LONG_DATE_FORMAT, TIME_FORMAT,
 };
 
 fn date(date_str: &str) -> String {
@@ -104,4 +104,44 @@ pub fn render_status_block<'a>(
             Err(e.into())
         }
     }
+}
+
+// Incidents are defined as text in the config.json file
+pub fn render_incident<'a>(env: &Environment<'a>, incident: &Incident) -> Result<String> {
+    let state = match incident.status.as_str() {
+        "Resolved" => "success",
+        "Ongoing" => "warning",
+        _ => "",
+    };
+    // TODO: status enum for color
+    // TODO: longer form text, WYSIWYG? Markdown?
+    let context = context! {
+        title => incident.title,
+        description => format_incident_description(&incident.description),
+        state => state,
+        status => incident.status,
+        display_date => incident.display_date,
+        started_at => incident.started_at.format(LONG_DATE_FORMAT).to_string(),
+        resolved_at => incident.resolved_at.format(LONG_DATE_FORMAT).to_string(),
+    };
+
+    let template = env.get_template("partials/incident.html.jinja")?;
+
+    let rendered = template.render(context);
+
+    match rendered {
+        Ok(rendered) => Ok(rendered),
+        Err(e) => {
+            eprintln!("Template Render Error: {:#?}", e);
+            Err(e.into())
+        }
+    }
+}
+
+fn format_incident_description(description: &str) -> String {
+    description
+        .replace("\t", "    ")
+        .split("\n")
+        .collect::<Vec<&str>>()
+        .join("<br>")
 }

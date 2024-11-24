@@ -1,3 +1,10 @@
+- [ ] Incidents at the bottom of the page
+- [ ] Add other links and such on homescreen history checks (links, hover, etc)
+- [ ] History page with the whole history of each check
+- [ ] Separate into history files
+- [ ] Append every check, calculate status based on last?, groupBy checks for date and display them all?, aggreagte on individual history page
+
+
 - [x] Bring in loco-rs.gg css changes for mobile and such
 - [x] Implement the checking system
 - [x] Make it so the args passed in are what checks are run, and cron is done externally

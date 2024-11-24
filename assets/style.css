@@ -818,6 +818,21 @@ button:active {
   margin-top: 0;
 }
 
+.entry-date {
+  color: var(--text-color-alt);
+}
+
+.entry-content {
+  margin-top: 1ch;
+  display: flex;
+  flex-direction: row;
+  gap: 1ch;
+}
+
+.entry-notes {
+  margin-top: 0;
+}
+
 .footer-box {
   position: absolute;
   left: calc(50% - 48ch / 2);

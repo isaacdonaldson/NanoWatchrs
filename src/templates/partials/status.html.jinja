@@ -21,8 +21,8 @@
         </td>
     </tr>
     <tr>
-        <th class="width-auto">{{history_line | length}} Days</th>
-        <td class="width-min">
+        <th class="width-min"><span style="white-space: nowrap;">{{history_line | length}} Days</span></th>
+        <td class="width-auto">
             <div class="history-line">
                 {% for e in history_line %}
                 {% include 'partials/history_entry.html.jinja' %}

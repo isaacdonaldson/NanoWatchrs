@@ -47,14 +47,14 @@ pub fn render_status_block<'a>(
     check: &Check,
     history_section: HistorySection,
 ) -> Result<String> {
-    let date_cutoff = Utc::now().naive_utc() - chrono::Duration::days((HISTORY_LENGTH + 1) as i64);
+    let date_cutoff = Utc::now().naive_utc() - chrono::Duration::days((HISTORY_LENGTH) as i64);
 
     let mut unsuccessful_checks = 0;
 
     let mut history = history_section
         .entries
         .iter()
-        .filter(|entry| entry.date >= date_cutoff.date())
+        .filter(|entry| entry.date > date_cutoff.date())
         .map(|entry| entry.to_owned())
         .map(|entry| {
             if entry.state != State::Success {

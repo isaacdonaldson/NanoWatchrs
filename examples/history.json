@@ -2,7 +2,7 @@
   "watchers": [
     {
       "name": "Backend API",
-      "last_updated": "2024-11-24 00:18:03",
+      "last_updated": "2024-11-24 06:29:00",
       "uptime": null,
       "entries": [
         {
@@ -181,6 +181,31 @@
           "notes": "No Incident"
         },
         {
+          "date": "2024-11-17",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-18",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-19",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-20",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-21",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
           "date": "2024-11-22",
           "state": "success",
           "notes": "No Incident"
@@ -199,7 +224,7 @@
     },
     {
       "name": "Domain",
-      "last_updated": "2024-11-24 00:18:03",
+      "last_updated": "2024-11-24 06:29:00",
       "uptime": 92.34,
       "entries": [
         {
@@ -378,6 +403,31 @@
           "notes": "Degraded Performance"
         },
         {
+          "date": "2024-11-17",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-18",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-19",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-20",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-21",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
           "date": "2024-11-22",
           "state": "success",
           "notes": "No Incident"
@@ -396,7 +446,7 @@
     },
     {
       "name": "Database Connection",
-      "last_updated": "2024-11-24 00:18:03",
+      "last_updated": "2024-11-24 06:29:00",
       "uptime": 98.76,
       "entries": [
         {
@@ -573,6 +623,31 @@
           "date": "2024-11-16",
           "state": "unknown",
           "notes": "Information N/A"
+        },
+        {
+          "date": "2024-11-17",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-18",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-19",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-20",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-21",
+          "state": "success",
+          "notes": "No Incident"
         },
         {
           "date": "2024-11-22",

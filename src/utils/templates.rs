@@ -86,6 +86,7 @@ pub fn render_status_block<'a>(
     let context = context! {
         title => check.name,
         subtitle => check.description,
+        page_link => check.page_link,
         status => display_status,
         state => state.to_state(),
         updated_at => history_section.last_updated.format(LONG_DATE_FORMAT).to_string(),

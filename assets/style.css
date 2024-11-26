@@ -55,7 +55,8 @@ Alternate '1':                "cv11": true
   --bg-light: #fffbed; /* off-white */
   --bg-dark: #212121; /* off-black */
   --link: #0d47a1; /* dark blue */
-  --link-hover: #1266e2; /* light blue */
+  --link-hover-light: #1266e2; /* blue */
+  --link-hover-dark: #0029a4; /* dark blue */
   --success-light: #a9dc76; /* green */
   --success-dark: #98c66a; /* green */
   --failure-light: #ff6188; /* red */
@@ -86,24 +87,62 @@ Alternate '1':                "cv11": true
   --warning: var(--warning-dark);
   --danger: var(--danger-dark);
   --disabled: var(--disabled-light);
+  --link-hover: var(--link-hover-dark);
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background-color: var(--bg-dark);
-    --text-color: var(--font-light);
-    --text-color-alt: var(--font-dark-alt);
-    --highlight-font-color: var(--font-dark);
-    --highlight-background-color: var(--warning);
-    --button-background-hover: var(--bg-light);
-    --button-text-hover: var(--font-dark);
-    --success: var(--success-light);
-    --failure: var(--failure-light);
-    --warning: var(--warning-light);
-    --danger: var(--danger-light);
-    --disabled: var(--disabled-light);
-  }
-} */
+[data-theme="dark"] {
+  --background-color: var(--bg-dark);
+  --text-color: var(--font-light);
+  --text-color-alt: var(--font-dark-alt);
+  --highlight-font-color: var(--font-dark);
+  --highlight-background-color: var(--warning);
+  --button-background-hover: var(--bg-light);
+  --button-text-hover: var(--font-dark);
+  --success: var(--success-light);
+  --failure: var(--failure-light);
+  --warning: var(--warning-light);
+  --danger: var(--danger-light);
+  --disabled: var(--disabled-light);
+  --link-hover: var(--link-hover-light);
+}
+
+[data-theme="light"] {
+  --background-color: var(--bg-light);
+  --text-color: var(--font-dark);
+  --text-color-alt: var(--font-dark-alt);
+  --highlight-font-color: var(--font-dark);
+  --highlight-background-color: var(--danger);
+  --button-background-hover: var(--bg-dark);
+  --button-text-hover: var(--font-light);
+  --success: var(--success-dark);
+  --failure: var(--failure-dark);
+  --warning: var(--warning-dark);
+  --danger: var(--danger-dark);
+  --disabled: var(--disabled-light);
+  --link-hover: var(--link-hover-dark);
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  padding: calc(var(--line-height) / 2 - var(--border-thickness));
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+[data-theme="dark"] .theme-toggle .theme-toggle-text {
+  content: "LIGHT";
+}
+
+[data-theme="light"] .theme-toggle .theme-toggle-text {
+  content: "DARK";
+}
 
 /* Reset */
 /* Box sizing and font smoothing */
@@ -840,32 +879,12 @@ button:active {
   line-height: 1.2;
 }
 
-/* .separator {
-  display: flex;
-  align-items: center;
-  text-align: center;
-}
-
-.separator::before,
-.separator::after {
-  content: "";
-  flex: 1;
-  border-bottom: 1px solid #000;
-}
-
-.separator:not(:empty)::before {
-  margin-right: 0.25em;
-}
-
-.separator:not(:empty)::after {
-  margin-left: 0.25em;
-} */
-
 .separator {
   position: relative;
   display: flex;
   align-items: center;
   text-align: center;
+  gap: calc(var(--border-thickness) * 4);
   height: var(--line-height);
   margin: calc(var(--line-height) * 1.5) 0;
   border: none;

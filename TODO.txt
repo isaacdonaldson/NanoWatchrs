@@ -1,12 +1,13 @@
-- [x] Incidents at the bottom of the page
-- [x] Popup status marker is not showing up
-- [ ] Add other links and such on homescreen history checks (links, hover, etc)
+- [x] missing border on tables
 - [ ] History page with the whole history of each check
 - [ ] Separate into history files
+- [x] Incidents at the bottom of the page
+- [x] Popup status marker is not showing up
+- [x] Add other links and such on homescreen history checks (links, hover, etc)
 - [ ] Append every check, calculate status based on last?, groupBy checks for date and display them all?, aggreagte on individual history page
 - [x] Link hover color
-- [ ] missing border on tables
 - [x] Dark mode colors missing
+- [ ] Add a logo and favicon
 
 
 - [x] Bring in loco-rs.gg css changes for mobile and such

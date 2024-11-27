@@ -2,7 +2,7 @@
   "watchers": [
     {
       "name": "Backend API",
-      "last_updated": "2024-11-26 07:14:45",
+      "last_updated": "2024-11-27 06:29:11",
       "uptime": null,
       "entries": [
         {
@@ -221,7 +221,17 @@
           "notes": "No Incident"
         },
         {
+          "date": "2024-11-25",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
           "date": "2024-11-26",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-27",
           "state": "success",
           "notes": "No Incident"
         }
@@ -229,7 +239,7 @@
     },
     {
       "name": "Domain",
-      "last_updated": "2024-11-26 07:14:45",
+      "last_updated": "2024-11-27 06:29:11",
       "uptime": 92.34,
       "entries": [
         {
@@ -448,7 +458,17 @@
           "notes": "No Incident"
         },
         {
+          "date": "2024-11-25",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
           "date": "2024-11-26",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-27",
           "state": "success",
           "notes": "No Incident"
         }
@@ -456,7 +476,7 @@
     },
     {
       "name": "Database Connection",
-      "last_updated": "2024-11-26 07:14:45",
+      "last_updated": "2024-11-27 06:29:11",
       "uptime": 98.76,
       "entries": [
         {
@@ -675,7 +695,17 @@
           "notes": "No Incident"
         },
         {
+          "date": "2024-11-25",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
           "date": "2024-11-26",
+          "state": "success",
+          "notes": "No Incident"
+        },
+        {
+          "date": "2024-11-27",
           "state": "success",
           "notes": "No Incident"
         }

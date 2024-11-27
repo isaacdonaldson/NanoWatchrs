@@ -48,8 +48,18 @@
 <table class="header tablet">
     <tr>
         <td colspan="2" rowspan="2" class="width-auto">
-            <h1 class="title">{{ title }}</h1>
-            <span class="subtitle">{{ subtitle }}</span>
+            {%if page_link %}
+                <a href="{{ page_link }}"><h1 class="title">
+                    {{ title }}
+                </h1></a>
+            {% else %}
+                <h1 class="title">
+                    {{ title }}
+                </h1>
+            {% endif %}
+            {%if subtitle %}
+                <span class="subtitle">{{ subtitle }}</span>
+            {% endif %}
         </td>
         <th>Status</th>
         <td class="width-min">
@@ -82,8 +92,18 @@
 <table class="header mobile">
     <tr>
         <td colspan="3" class="width-auto" style="text-align: left;">
-            <h1 class="title">{{ title }}</h1>
-            <span class="subtitle">{{ subtitle }}</span>
+            {%if page_link %}
+                <a href="{{ page_link }}"><h1 class="title">
+                    {{ title }}
+                </h1></a>
+            {% else %}
+                <h1 class="title">
+                    {{ title }}
+                </h1>
+            {% endif %}
+            {%if subtitle %}
+                <span class="subtitle">{{ subtitle }}</span>
+            {% endif %}
         </td>
     </tr>
     <tr>

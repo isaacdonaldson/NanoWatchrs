@@ -123,17 +123,11 @@ Alternate '1':                "cv11": true
 }
 
 .theme-toggle {
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
-  padding: calc(var(--line-height) / 2 - var(--border-thickness));
-  line-height: 1;
+  float: right;
+  margin-right: 1ch;
+  margin-bottom: calc(var(--line-height) * 2);
   cursor: pointer;
   transition: transform 0.2s ease;
-}
-
-.theme-toggle:active {
-  transform: scale(0.95);
 }
 
 [data-theme="dark"] .theme-toggle .theme-toggle-text {

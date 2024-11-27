@@ -1,25 +1,24 @@
-- [x] missing border on tables
-- [ ] History page with the whole history of each check
+- [ ] Guide for cloudflare and cron jobs
 - [ ] Separate into history files
+- [ ] History page with the whole history of each check
+- [ ] Append every check, calculate status based on last?, groupBy checks for date and display them all?, aggreagte on individual history page
+- [ ] Add a logo and favicon
 - [x] Incidents at the bottom of the page
 - [x] Popup status marker is not showing up
 - [x] Add other links and such on homescreen history checks (links, hover, etc)
-- [ ] Append every check, calculate status based on last?, groupBy checks for date and display them all?, aggreagte on individual history page
+- [x] missing border on tables
 - [x] Link hover color
 - [x] Dark mode colors missing
-- [ ] Add a logo and favicon
 
 
 - [x] Bring in loco-rs.gg css changes for mobile and such
 - [x] Implement the checking system
 - [x] Make it so the args passed in are what checks are run, and cron is done externally
-- [ ] Change the history to have a file for each check?
 - [x] Fill in missing incidents with n/a or something
 - [x] Incident log page
 - [x] Circle not showing up and gets cut off inside history entry popup
-- [ ] Either have separate history files, or have a mutex on them
-- [ ] Logo and linking added to html generation
 - [ ] Add logging of runtime checks and errors
+- [ ] Output destination to S3 or somewhere else
 
 
 - [x] Light and dark themes (and toggle)

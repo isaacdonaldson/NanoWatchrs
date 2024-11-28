@@ -40,21 +40,21 @@ The `"site"` settings represent general settings. These are used in the meta tag
 - `url`: Main website URL
 - `logo`: URL to your logo image
 
-the `"page"` settings represent the settings for the page itself. These are used in the title and header of the page.
+The `"page"` settings represent the settings for the page itself. These are used in the title and header of the page.
 
 - `title`: Browser tab title
 - `header`: Main heading displayed on the status page
 
 ## Service Checks
 
-The `checks` array defines the services to monitor. Three types of checks are supported:
+The `checks` array defines the services to monitor. Three types of checks are supported, but they share the same structure:
 
 - `name`: Display name for the service. Important as it's used as the identifier
 - `description`: (Optional) Service description. Displayed under the name on the status section
 - `type`: Check type (`http`, `ping`, or `port`)
-- `target`: URL, hostname, or IP to check
+- `target`: URL, hostname, or IP to check (context dependent)
 - `page_link`: (Optional) URL to service documentation or information
-- `expected_status`: (HTTP only) Expected response code
+- `expected_status`: (HTTP check only) Expected response code
 - `port`: (Port check only) Port number to test
 - `timeout_ms`: Maximum time to wait for response in milliseconds. Danger (Potential Outage or Issue) will be reported if timeout is reached
 
@@ -84,7 +84,7 @@ The `checks` array defines the services to monitor. Three types of checks are su
 }
 ```
 
-_Note_: Ping checks might not be supported on some setups (like cloudflare workers).
+_Note_: Ping checks might not be supported on some setups (like Cloudflare Workers or AWS Lambdas).
 
 ### Port Check
 
@@ -126,11 +126,36 @@ All the fields are required for an incident to be displayed.
 
 # Running
 
-There are many different ways to run the status page job. It is not meant to be a long running service, but instead relies on external programs to call it at regular intervals. The intention was to use cron scheduling that is supported on most systems, and in most cloud providers with serverless functions.
+NanoWatchrs is designed to run as a scheduled task rather than a continuous service. This approach provides flexibility and works well with:
 
-The way to specify different frequencies for each individual check is not to have them in a configuration file. Instead, you are meant to specify which check to perform, and use the frequency of the calling program to determine how often to run the checks.
+- System-level schedulers (like cron)
+- Cloud provider schedulers (AWS Lambda, Google Cloud Functions, etc.)
+- CI/CD pipeline schedulers
 
-Checks are identified by their `"name"` field in the configuration files `"checks"` section, and are specified by setting the `--check` or `-c` flag when running the program. If you want all checks to be run, you can use the `--all` or `-a` flag.
+Instead of defining check frequencies in the configuration file, you control the frequency through your scheduler. Each check can be run independently using the check's name.
+
+For example, to run a specific check:
+
+```bash
+nanowatchrs --check "Backend API"
+# Or short form
+nanowatchrs -c "Backend API"
+```
+
+To run all checks:
+
+```bash
+nanowatchrs --all
+# Or short form
+nanowatchrs -a
+```
+
+This approach gives you complete control over:
+
+- How frequently each check runs
+- Which scheduler to use
+- Which Resources to use
+- Cost optimization (especially in cloud environments)
 
 ## Cron
 
@@ -138,13 +163,13 @@ Checks are identified by their `"name"` field in the configuration files `"check
 
 Open up your crontab for editing:
 
-```sh
+```bash
 crontab -e
 ```
 
 Add the following line to run all checks every 5 minutes:
 
-```sh
+```bash
 # Run all checks every 5 minutes
 */5 * * * * /path/to/nanowatchrs --all
 ```
@@ -153,13 +178,13 @@ Add the following line to run all checks every 5 minutes:
 
 Open up your crontab for editing:
 
-```sh
+```bash
 crontab -e
 ```
 
 Add the following lines to run individual checks at different intervals:
 
-```sh
+```bash
 # Run backend check every minute
 * * * * * /path/to/nanowatchrs --check "Backend"
 
@@ -169,6 +194,8 @@ Add the following lines to run individual checks at different intervals:
 # Run backup check every hour
 0 * * * * /path/to/nanowatchrs --check "Backup Service"
 ```
+
+_Disclaimer_: This has not been tested yet. Use at your own risk.
 
 ## Systemd
 
@@ -180,7 +207,7 @@ With a crontab that is defined like so:
 
 In your `crontab` file:
 
-```sh
+```bash
 # Run all checks every 5 minutes
 */5 * * * * /path/to/nanowatchrs --all >> /var/log/cron.log 2>&1
 ```

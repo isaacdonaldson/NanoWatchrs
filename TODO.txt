@@ -1,15 +1,23 @@
-- [ ] Guide for cloudflare and cron jobs
-- [ ] History page with the whole history of each check
-- [ ] Append every check, calculate status based on last?, groupBy checks for date and display them all?, aggreagte on individual history page
+Now
+====================
 - [ ] Add a logo and favicon
-
-- [ ] Add logging of runtime checks and errors
-- [ ] Output destination to S3 or somewhere else
-
+- [ ] Guide for cloudflare and cron jobs
 - [ ] Have examples of running as a native binary/cron job, as well as running on lambda/cloudflare worker
 - [ ] Have disclaimer about ping and TCP not being possible from Cloudflare workers
+
+Next
+====================
+- [ ] History page with the whole history of each check
+- [ ] Append every check, calculate status based on last?, groupBy checks for date and display them all?, aggreagte on individual history page
+
+Coming Up
+====================
+- [ ] Add logging of runtime checks and errors to log file or stdout
+- [ ] Output destination to S3 or somewhere else
 - [ ] Option to have generated files in a different location (S3 option)
-- [ ] Have a favicon
+
+Maybe Later
+====================
 - [ ] Report incidents & subscribe to events
 - [ ] Time since last incident poster with running clock (Joke)
 - [ ] Css minifier?

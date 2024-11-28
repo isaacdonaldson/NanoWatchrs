@@ -8,6 +8,8 @@ This is meant to be launched as a cron job, or as a repeated task, or something 
 
 # Configuration
 
+All configuration and history files are stored in the `config/` directory, so make sure to have that directory created already. This repository contains an example `config/` directory that you can use as a starting/reference point.
+
 The status page is configured using a `config.json` file. The config file has 3 parts/keys: `"settings"`, `"checks"`, and `"incidents"`.
 
 Below is an explanation of each of the configuration options.

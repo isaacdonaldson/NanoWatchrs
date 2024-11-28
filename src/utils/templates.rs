@@ -110,8 +110,8 @@ pub fn render_status_block<'a>(
 // Incidents are defined as text in the config.json file
 pub fn render_incident<'a>(env: &Environment<'a>, incident: &Incident) -> Result<String> {
     let state = match incident.status.as_str() {
-        "Resolved" => "success",
-        "Ongoing" => "warning",
+        "Resolved" | "resolved" => "success",
+        "Ongoing" | "ongoing" => "warning",
         _ => "",
     };
     // TODO: status enum for color

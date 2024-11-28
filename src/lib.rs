@@ -8,7 +8,7 @@ pub const CONFIG_PATH: &'static str = "examples/config.json";
 pub const DATE_FORMAT: &'static str = "%Y-%m-%d";
 pub const TIME_FORMAT: &'static str = "%H:%M:%S";
 pub const LONG_DATE_FORMAT: &'static str = "%Y-%m-%d %H:%M:%S";
-pub const HISTORY_PATH: &'static str = "examples/history.json";
+pub const HISTORY_PATH: &'static str = "examples";
 pub const HISTORY_LENGTH: usize = 30;
 
 pub type Error = Box<dyn std::error::Error>;

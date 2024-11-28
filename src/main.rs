@@ -1,14 +1,12 @@
 use minijinja::context;
 use nanowatchrs::utils::checks::run_check;
 
-use std::collections::HashMap;
-
-use nanowatchrs::utils::config::{read_config_file, read_history_file, HistorySection};
+use nanowatchrs::utils::config::{read_config_file, read_history_file};
 use nanowatchrs::utils::templates::{
     create_env, render_incident, render_status_block, write_string_to_asset_folder,
 };
+use nanowatchrs::CONFIG_PATH;
 use nanowatchrs::{Result, StatusPageContext};
-use nanowatchrs::{CONFIG_PATH, HISTORY_PATH};
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -44,27 +42,20 @@ async fn main() -> Result<()> {
 fn run_template_rendering(config: &StatusPageContext) -> Result<()> {
     let env = create_env();
 
-    let history = read_history_file(HISTORY_PATH)
-        .expect(format!("Failed to read history file at '{}'", HISTORY_PATH).as_str())
-        .watchers
-        .iter()
-        .map(|e| (e.name.clone(), e.clone()))
-        .collect::<HashMap<String, HistorySection>>();
-
     let template = env.get_template("index.html.jinja")?;
 
     let status_blocks: Option<String> = config
         .checks
         .iter()
-        .filter_map(|check| match history.get(&check.name) {
-            None => {
+        .filter_map(|check| match read_history_file(&check.name) {
+            Err(_) => {
                 println!(
                     "History entry for '{}' is required but not found",
                     check.name
                 );
                 None
             }
-            Some(history) => render_status_block(&env, check, history.clone()).ok(),
+            Ok(history) => render_status_block(&env, check, history.clone()).ok(),
         })
         .reduce(|a, b| format!("{}\n{}", a, b));
 

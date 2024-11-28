@@ -24,76 +24,76 @@ pub fn read_config_file(config_path: &str) -> Result<StatusPageContext> {
     Ok(config)
 }
 
-pub fn read_history_file(history_path: &str) -> Result<HistoryFile> {
-    let history_file = std::fs::read_to_string(history_path)?;
-    let history: HistoryFile = serde_json::from_str(&history_file)?;
+pub fn read_history_file(check_name: &str) -> Result<HistorySection> {
+    // Turn a "Backend API" into "Backend_API"
+    let check_file_path = check_name.split(" ").collect::<Vec<&str>>().join("_");
+
+    let file_path = format!("{}/{}_history.json", HISTORY_PATH, check_file_path);
+
+    let history_file = std::fs::read_to_string(file_path)?;
+    let history: HistorySection = serde_json::from_str(&history_file)?;
     Ok(history)
 }
 
-pub fn write_history_file(history: &HistoryFile) -> Result<()> {
+pub fn write_history_file(check_name: &str, history: &HistorySection) -> Result<()> {
+    // Turn a "Backend API" into "Backend_API"
+    let check_file_path = check_name.split(" ").collect::<Vec<&str>>().join("_");
+
+    let file_path = format!("{}/{}_history.json", HISTORY_PATH, check_file_path);
+
     let history_json = serde_json::to_string_pretty(&history)?;
-    std::fs::write(HISTORY_PATH, history_json)?;
+    std::fs::write(file_path, history_json)?;
     Ok(())
 }
 
 // History is stored so the newest entry is at the end of the array
 pub fn append_history_event(section: &str, event: HistoryEntry) -> Result<()> {
     // We want to mutate to add because a copy could be really expensive
-    let mut history = read_history_file(HISTORY_PATH)?;
-    history
-        .watchers
-        .iter_mut()
-        .find(|w| w.name == section)
-        .expect(format!("History section {} could not be found", section).as_str())
-        .entries
-        .push(event);
+    let mut history = read_history_file(section)?;
 
-    write_history_file(&history)?;
+    history.entries.push(event);
+
+    write_history_file(section, &history)?;
     Ok(())
 }
 
 pub fn update_history_section(section: &str, event: HistoryEntry) -> Result<()> {
-    let mut history = read_history_file(HISTORY_PATH)?;
-    let section = history
-        .watchers
-        .iter_mut()
-        .find(|w| w.name == section)
-        .expect(format!("History section {} could not be found", section).as_str());
-    section.last_updated = chrono::Utc::now().naive_utc();
+    let mut history = read_history_file(section)?;
+    history.last_updated = chrono::Utc::now().naive_utc();
 
-    match section.entries.last() {
-        None => section.entries.push(event),
+    match history.entries.last() {
+        None => history.entries.push(event),
         Some(e) => {
             if e.date != event.date {
-                section.entries.push(event);
+                history.entries.push(event);
             } else {
                 match (&e.state, &event.state) {
                     // Do nothing if both at success
                     (State::Success, State::Success) => (),
                     // If the old event was success and the new event is not, replace it
                     (State::Success, _) => {
-                        section.entries.pop();
-                        section.entries.push(event)
+                        history.entries.pop();
+                        history.entries.push(event)
                     }
                     // If the old event was disabled and the new event is not, replace it
                     (State::Disabled, _) => {
-                        section.entries.pop();
-                        section.entries.push(event);
+                        history.entries.pop();
+                        history.entries.push(event);
                     }
                     // We want a warning to be replaced by a danger
                     (State::Warning, State::Danger) => {
-                        section.entries.pop();
-                        section.entries.push(event);
+                        history.entries.pop();
+                        history.entries.push(event);
                     }
                     // We want a warning to be replaced by a failure
                     (State::Warning, State::Failure) => {
-                        section.entries.pop();
-                        section.entries.push(event);
+                        history.entries.pop();
+                        history.entries.push(event);
                     }
                     // We want a danger to be replaced by a failure
                     (State::Danger, State::Failure) => {
-                        section.entries.pop();
-                        section.entries.push(event);
+                        history.entries.pop();
+                        history.entries.push(event);
                     }
                     _ => {}
                 };
@@ -101,6 +101,6 @@ pub fn update_history_section(section: &str, event: HistoryEntry) -> Result<()> 
         }
     };
 
-    write_history_file(&history)?;
+    write_history_file(section, &history)?;
     Ok(())
 }

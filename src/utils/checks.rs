@@ -57,7 +57,7 @@ pub async fn perform_check(check: &Check) -> Result<CheckResult> {
 
     match result {
         Ok(result) => {
-            println!("Check success: {:?} @ {:?}", check.name, start_time,);
+            println!("\t[SUCCESS]: {:?} @ {:?}", check.name, start_time,);
             Ok(result)
         }
         Err(err) => {

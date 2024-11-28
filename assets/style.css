@@ -868,9 +868,9 @@ button:active {
 
 .footer-box {
   position: absolute;
-  left: calc(50% - 48ch / 2);
+  left: calc(50% - 52ch / 2);
   font-size: 0.7rem;
-  line-height: 1.2;
+  line-height: 1;
 }
 
 .separator {

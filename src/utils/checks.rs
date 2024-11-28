@@ -6,7 +6,12 @@ use super::config::update_history_section;
 pub async fn run_check(check: &Check) -> Result<CheckResult> {
     let timeout = std::time::Duration::from_millis(check.timeout_ms);
 
-    let result = tokio::time::timeout(timeout, perform_check(check)).await?;
+    let result = tokio::time::timeout(timeout, perform_check(check)).await;
+
+    let result = match result {
+        Ok(res) => res,
+        Err(_) => Ok(CheckResult::Failure(State::Danger)),
+    };
 
     match result {
         // Write to history file

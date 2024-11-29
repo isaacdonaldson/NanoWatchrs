@@ -1,9 +1,7 @@
 Now
 ====================
-- [ ] Add a logo and favicon
-- [ ] Guide for cloudflare and cron jobs
-- [ ] Have examples of running as a native binary/cron job, as well as running on lambda/cloudflare worker
-- [ ] Have disclaimer about ping and TCP not being possible from Cloudflare workers
+- [ ] Finish readme page for all running options
+- [ ] Get example site up
 
 Next
 ====================
@@ -15,6 +13,8 @@ Coming Up
 - [ ] Add logging of runtime checks and errors to log file or stdout
 - [ ] Output destination to S3 or somewhere else
 - [ ] Option to have generated files in a different location (S3 option)
+- [ ] Cron from GitHub actions (maybe integration) that also commits the generated changes
+- [ ] Triggers to report incidents, send emails, etc.. to be able to subscribe to events
 
 Maybe Later
 ====================

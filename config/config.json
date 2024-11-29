@@ -1,14 +1,16 @@
 {
   "settings": {
     "site": {
-      "name": "NanoWatchrs Status",
-      "description": "NanoWatchrs status page",
-      "url": "https://status.nanowatchrs.com",
-      "logo": "https://nanowatchrs.com/assets/img/logo.svg"
+      "name": "Nanowatchrs Status",
+      "description": "Nanowatchrs status page",
+      "url": "https://status.example.com",
+      "logo": "/nanowatchrs_logo.svg"
     },
     "page": {
-      "title": "NanoWatchrs Status",
-      "header": "NanoWatchrs Status"
+      "title": "Nanowatchrs Status",
+      "header": "Nanowatchrs",
+      "header_link": "https://status.example.com",
+      "subheader": "Real-time status and incident updates"
     }
   },
   "checks": [

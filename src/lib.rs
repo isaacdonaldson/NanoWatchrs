@@ -39,6 +39,8 @@ pub struct SiteParams {
 pub struct PageParams {
     pub title: String,
     pub header: String,
+    pub header_link: String,
+    pub subheader: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]

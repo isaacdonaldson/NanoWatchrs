@@ -1,4 +1,4 @@
-# NanoWatchrs
+# Nanowatchrs
 
 This is a super small and simple status page. It is meant to be lean when served, and lean when ran. It uses Rust to poll the status of the services, and then creates static HTML files that can be served as static assets (who woulda thunk).
 
@@ -27,7 +27,9 @@ Below is an explanation of each of the configuration options.
     },
     "page": {
       "title": "Status Page Title",
-      "header": "Status Page Header"
+      "header": "Status Page Header",
+      "header_link": "https://your-domain.com",
+      "subheader": "Status Page Subheader Details"
     }
   }
 }
@@ -38,12 +40,14 @@ The `"site"` settings represent general settings. These are used in the meta tag
 - `name`: Your site or service name
 - `description`: Brief description of your service
 - `url`: Main website URL
-- `logo`: URL to your logo image
+- `logo`: URL to your logo image, displayed as the favicon
 
 The `"page"` settings represent the settings for the page itself. These are used in the title and header of the page.
 
 - `title`: Browser tab title
 - `header`: Main heading displayed on the status page
+- `header_link`: URL to link the header to, if absent will not link to anything
+- `subheader`: Subheading displayed under the main heading
 
 ## Service Checks
 

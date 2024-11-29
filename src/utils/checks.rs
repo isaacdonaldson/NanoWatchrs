@@ -1,3 +1,4 @@
+#![allow(clippy::missing_errors_doc, clippy::missing_panics_doc)]
 use crate::{Check, CheckResult, CheckType};
 use crate::{HistoryEntry, Result, State};
 
@@ -8,10 +9,7 @@ pub async fn run_check(check: &Check) -> Result<CheckResult> {
 
     let result = tokio::time::timeout(timeout, perform_check(check)).await;
 
-    let result = match result {
-        Ok(res) => res,
-        Err(_) => Ok(CheckResult::Failure(State::Danger)),
-    };
+    let result = result.unwrap_or_else(|_| Ok(CheckResult::Failure(State::Danger)));
 
     match result {
         // Write to history file
@@ -37,7 +35,9 @@ pub async fn run_check(check: &Check) -> Result<CheckResult> {
                 State::Disabled => {
                     HistoryEntry::new_today(State::Disabled, "Information N/A".into())
                 }
-                _ => unreachable!("There is a state returned from a check that doesn't make sense"),
+                State::Success => {
+                    unreachable!("There is a state returned from a check that doesn't make sense")
+                }
             };
 
             update_history_section(check.name.as_str(), history_entry)?;
@@ -66,16 +66,15 @@ pub async fn perform_check(check: &Check) -> Result<CheckResult> {
             Ok(result)
         }
         Err(err) => {
-            eprintln!("Error performing check: {:?}", err);
+            eprintln!("Error performing check: {err:#?}");
             Ok(CheckResult::Unknown)
         }
     }
 }
 
 pub async fn perform_http_check(check: &Check) -> Result<CheckResult> {
-    let response = match reqwest::get(&check.target).await {
-        Ok(response) => response,
-        Err(_) => return Ok(CheckResult::Failure(State::Danger)),
+    let Ok(response) = reqwest::get(&check.target).await else {
+        return Ok(CheckResult::Failure(State::Danger));
     };
 
     let status = response.status().as_u16();
@@ -87,6 +86,7 @@ pub async fn perform_http_check(check: &Check) -> Result<CheckResult> {
     }
 
     // These are all failure cases
+    #[allow(clippy::match_same_arms, clippy::manual_range_patterns)]
     match status {
         301 | 302 | 303 => Ok(CheckResult::Failure(State::Warning)),
         308 => Ok(CheckResult::Failure(State::Danger)),

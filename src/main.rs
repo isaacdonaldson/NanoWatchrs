@@ -13,7 +13,7 @@ use nanowatchrs::{Result, StatusPageContext};
 #[tokio::main]
 async fn main() -> Result<()> {
     let mut config = read_config_file(CONFIG_PATH)
-        .expect(format!("Failed to read config file at '{}'", CONFIG_PATH).as_str());
+        .unwrap_or_else(|_| panic!("Failed to read config file at '{CONFIG_PATH}'"));
 
     match parse_args() {
         RunMode::All => {}
@@ -23,13 +23,13 @@ async fn main() -> Result<()> {
                 .checks
                 .iter()
                 .filter(|check| checks.contains(&check.name))
-                .map(|check| check.clone())
+                .cloned()
                 .collect();
         }
     };
 
     // Create new immutable StatusPageContext from the mutable config
-    let config = StatusPageContext::from(config);
+    let config: StatusPageContext = config;
 
     for check in &config.checks {
         println!("Running check '{}'", check.name);
@@ -81,9 +81,9 @@ fn run_template_rendering(config: &StatusPageContext) -> Result<()> {
                 );
                 None
             }
-            Ok(history) => render_status_block(&env, check, history.clone()).ok(),
+            Ok(history) => render_status_block(&env, check, &history).ok(),
         })
-        .reduce(|a, b| format!("{}\n{}", a, b));
+        .reduce(|a, b| format!("{a}\n{b}"));
 
     if status_blocks.is_none() {
         return Err("Error rendering status blocks".into());
@@ -99,7 +99,7 @@ fn run_template_rendering(config: &StatusPageContext) -> Result<()> {
             }
             Ok(template) => Some(template),
         })
-        .reduce(|a, b| format!("{}\n{}", a, b));
+        .reduce(|a, b| format!("{a}\n{b}"));
 
     let context = context! {
         site => config.settings.site,
@@ -137,17 +137,17 @@ fn parse_args() -> RunMode {
                 run_all = true;
             }
             _ => {
-                fatal(format!("Unknown argument '{}'", arg).as_str());
+                fatal(format!("Unknown argument '{arg}'").as_str());
             }
         }
     }
 
     if run_all {
-        return RunMode::All;
-    } else if checks.len() == 0 {
+        RunMode::All
+    } else if checks.is_empty() {
         fatal("specifiying a check with --check or -c is required");
     } else {
-        return RunMode::Some(checks);
+        RunMode::Some(checks)
     }
 }
 

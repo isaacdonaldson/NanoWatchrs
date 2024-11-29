@@ -1,3 +1,4 @@
+#![allow(clippy::missing_errors_doc, clippy::option_if_let_else)]
 use chrono::{NaiveDateTime, Utc};
 use minijinja::{context, path_loader, Environment};
 
@@ -10,14 +11,14 @@ use crate::{
 };
 
 fn date(date_str: &str) -> String {
-    match NaiveDateTime::parse_from_str(&date_str, LONG_DATE_FORMAT) {
+    match NaiveDateTime::parse_from_str(date_str, LONG_DATE_FORMAT) {
         Ok(date) => date.format(DATE_FORMAT).to_string(),
         Err(_) => date_str.to_owned(),
     }
 }
 
 fn time(date_str: &str) -> String {
-    match NaiveDateTime::parse_from_str(&date_str, LONG_DATE_FORMAT) {
+    match NaiveDateTime::parse_from_str(date_str, LONG_DATE_FORMAT) {
         Ok(date) => date.format(TIME_FORMAT).to_string(),
         Err(_) => date_str.to_owned(),
     }
@@ -32,21 +33,22 @@ pub fn create_env<'a>() -> Environment<'a> {
     env.add_filter("date", date);
     env.add_filter("time", time);
 
-    return env;
+    env
 }
 
 pub fn write_string_to_asset_folder(file_name: &str, content: &str) -> Result<()> {
-    let full_path = format!("{}/{}", ASSETS_PATH, file_name);
+    let full_path = format!("{ASSETS_PATH}/{file_name}");
     fs::write(full_path, content)?;
     Ok(())
 }
 
 // Block name comes from the "checks" in the config file
-pub fn render_status_block<'a>(
-    env: &Environment<'a>,
+pub fn render_status_block(
+    env: &Environment<'_>,
     check: &Check,
-    history_section: HistorySection,
+    history_section: &HistorySection,
 ) -> Result<String> {
+    #[allow(clippy::cast_possible_wrap)]
     let date_cutoff = Utc::now().naive_utc() - chrono::Duration::days((HISTORY_LENGTH) as i64);
 
     let mut unsuccessful_checks = 0;
@@ -55,22 +57,23 @@ pub fn render_status_block<'a>(
         .entries
         .iter()
         .filter(|entry| entry.date > date_cutoff.date())
-        .map(|entry| entry.to_owned())
-        .map(|entry| {
+        .map(std::borrow::ToOwned::to_owned)
+        .inspect(|entry| {
             if entry.state != State::Success {
                 unsuccessful_checks += 1;
             }
-            entry
         })
         .collect::<Vec<HistoryEntry>>();
 
     let uptime = match history_section.uptime {
         Some(uptime) => uptime,
-        None => (1.0 - (unsuccessful_checks as f64 / history.len() as f64)) * 100.0,
+        #[allow(clippy::cast_precision_loss)]
+        None => (1.0 - (f64::from(unsuccessful_checks) / history.len() as f64)) * 100.0,
     };
 
-    if history.len() < HISTORY_LENGTH as usize {
+    if history.len() < HISTORY_LENGTH {
         for _ in 0..(HISTORY_LENGTH - history.len()) {
+            #[allow(clippy::cast_possible_wrap)]
             let date = Utc::now().naive_utc() - chrono::Duration::days(history.len() as i64);
             history.insert(0, HistoryEntry::default_for_date(date.date()));
         }
@@ -101,14 +104,14 @@ pub fn render_status_block<'a>(
     match rendered {
         Ok(rendered) => Ok(rendered),
         Err(e) => {
-            eprintln!("Template Render Error: {:#?}", e);
+            eprintln!("Template Render Error: {e:#?}");
             Err(e.into())
         }
     }
 }
 
 // Incidents are defined as text in the config.json file
-pub fn render_incident<'a>(env: &Environment<'a>, incident: &Incident) -> Result<String> {
+pub fn render_incident(env: &Environment<'_>, incident: &Incident) -> Result<String> {
     let state = match incident.status.as_str() {
         "Resolved" | "resolved" => "success",
         "Ongoing" | "ongoing" => "warning",
@@ -133,7 +136,7 @@ pub fn render_incident<'a>(env: &Environment<'a>, incident: &Incident) -> Result
     match rendered {
         Ok(rendered) => Ok(rendered),
         Err(e) => {
-            eprintln!("Template Render Error: {:#?}", e);
+            eprintln!("Template Render Error: {e:#?}");
             Err(e.into())
         }
     }
@@ -141,8 +144,8 @@ pub fn render_incident<'a>(env: &Environment<'a>, incident: &Incident) -> Result
 
 fn format_incident_description(description: &str) -> String {
     description
-        .replace("\t", "    ")
-        .split("\n")
+        .replace('\t', "    ")
+        .split('\n')
         .collect::<Vec<&str>>()
         .join("<br>")
 }

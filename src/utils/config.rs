@@ -1,3 +1,4 @@
+#![allow(clippy::missing_errors_doc)]
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 
@@ -26,9 +27,9 @@ pub fn read_config_file(config_path: &str) -> Result<StatusPageContext> {
 
 pub fn create_history_file(check_name: &str) -> Result<HistorySection> {
     // Turn a "Backend API" into "Backend_API"
-    let check_file_path = check_name.split(" ").collect::<Vec<&str>>().join("_");
+    let check_file_path = check_name.split(' ').collect::<Vec<&str>>().join("_");
 
-    let file_path = format!("{}/{}_history.json", HISTORY_PATH, check_file_path);
+    let file_path = format!("{HISTORY_PATH}/{check_file_path}_history.json");
 
     let history = HistorySection {
         name: check_name.into(),
@@ -44,29 +45,29 @@ pub fn create_history_file(check_name: &str) -> Result<HistorySection> {
 
 pub fn does_history_file_exist(check_name: &str) -> Result<bool> {
     // Turn a "Backend API" into "Backend_API"
-    let check_file_path = check_name.split(" ").collect::<Vec<&str>>().join("_");
+    let check_file_path = check_name.split(' ').collect::<Vec<&str>>().join("_");
 
-    let file_path = format!("{}/{}_history.json", HISTORY_PATH, check_file_path);
+    let file_path = format!("{HISTORY_PATH}/{check_file_path}_history.json");
 
     Ok(std::path::Path::new(&file_path).exists())
 }
 
 pub fn read_history_file(check_name: &str) -> Result<HistorySection> {
     // Turn a "Backend API" into "Backend_API"
-    let check_file_path = check_name.split(" ").collect::<Vec<&str>>().join("_");
+    let check_file_path = check_name.split(' ').collect::<Vec<&str>>().join("_");
 
-    let file_path = format!("{}/{}_history.json", HISTORY_PATH, check_file_path);
+    let file_path = format!("{HISTORY_PATH}/{check_file_path}_history.json");
 
-    let history_file = std::fs::read_to_string(file_path.clone())?;
+    let history_file = std::fs::read_to_string(file_path)?;
     let history: HistorySection = serde_json::from_str(&history_file)?;
     Ok(history)
 }
 
 pub fn write_history_file(check_name: &str, history: &HistorySection) -> Result<()> {
     // Turn a "Backend API" into "Backend_API"
-    let check_file_path = check_name.split(" ").collect::<Vec<&str>>().join("_");
+    let check_file_path = check_name.split(' ').collect::<Vec<&str>>().join("_");
 
-    let file_path = format!("{}/{}_history.json", HISTORY_PATH, check_file_path);
+    let file_path = format!("{HISTORY_PATH}/{check_file_path}_history.json");
 
     let history_json = serde_json::to_string_pretty(&history)?;
     std::fs::write(file_path, history_json)?;
@@ -91,16 +92,15 @@ pub fn update_history_section(section: &str, event: HistoryEntry) -> Result<()> 
     match history.entries.last() {
         None => history.entries.push(event),
         Some(e) => {
-            if e.date != event.date {
-                history.entries.push(event);
-            } else {
+            if e.date == event.date {
+                #[allow(clippy::match_same_arms)]
                 match (&e.state, &event.state) {
                     // Do nothing if both at success
                     (State::Success, State::Success) => (),
                     // If the old event was success and the new event is not, replace it
                     (State::Success, _) => {
                         history.entries.pop();
-                        history.entries.push(event)
+                        history.entries.push(event);
                     }
                     // If the old event was disabled and the new event is not, replace it
                     (State::Disabled, _) => {
@@ -124,6 +124,8 @@ pub fn update_history_section(section: &str, event: HistoryEntry) -> Result<()> 
                     }
                     _ => {}
                 };
+            } else {
+                history.entries.push(event);
             }
         }
     };

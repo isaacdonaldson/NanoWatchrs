@@ -1,14 +1,15 @@
+#![allow(clippy::missing_errors_doc)]
 use chrono::{NaiveDate, NaiveDateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 pub mod utils;
 
-pub const ASSETS_PATH: &'static str = "assets";
-pub const CONFIG_PATH: &'static str = "config/config.json";
-pub const DATE_FORMAT: &'static str = "%Y-%m-%d";
-pub const TIME_FORMAT: &'static str = "%H:%M:%S";
-pub const LONG_DATE_FORMAT: &'static str = "%Y-%m-%d %H:%M:%S";
-pub const HISTORY_PATH: &'static str = "config";
+pub const ASSETS_PATH: &str = "assets";
+pub const CONFIG_PATH: &str = "config/config.json";
+pub const DATE_FORMAT: &str = "%Y-%m-%d";
+pub const TIME_FORMAT: &str = "%H:%M:%S";
+pub const LONG_DATE_FORMAT: &str = "%Y-%m-%d %H:%M:%S";
+pub const HISTORY_PATH: &str = "config";
 pub const HISTORY_LENGTH: usize = 30;
 
 pub type Error = Box<dyn std::error::Error>;
@@ -55,7 +56,7 @@ pub struct StatusBlock {
     pub uptime: String,
 }
 
-#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum State {
     #[serde(rename = "unknown")]
@@ -67,23 +68,25 @@ pub enum State {
 }
 
 impl State {
-    pub fn to_state(&self) -> &str {
+    #[must_use]
+    pub const fn to_state(&self) -> &str {
         match self {
-            State::Success => "success",
-            State::Warning => "warning",
-            State::Danger => "danger",
-            State::Failure => "failure",
-            State::Disabled => "disabled",
+            Self::Success => "success",
+            Self::Warning => "warning",
+            Self::Danger => "danger",
+            Self::Failure => "failure",
+            Self::Disabled => "disabled",
         }
     }
 
-    pub fn to_status(&self) -> &str {
+    #[must_use]
+    pub const fn to_status(&self) -> &str {
         match self {
-            State::Success => "OK",
-            State::Warning => "Degraded",
-            State::Danger => "Issues",
-            State::Failure => "Down",
-            State::Disabled => "Unknown",
+            Self::Success => "OK",
+            Self::Warning => "Degraded",
+            Self::Danger => "Issues",
+            Self::Failure => "Down",
+            Self::Disabled => "Unknown",
         }
     }
 }
@@ -97,6 +100,7 @@ pub struct HistoryEntry {
 }
 
 impl HistoryEntry {
+    #[must_use]
     pub fn new_today(state: State, notes: String) -> Self {
         Self {
             date: Utc::now().naive_utc().date(),
@@ -105,6 +109,7 @@ impl HistoryEntry {
         }
     }
 
+    #[must_use]
     pub fn default_for_date(date: NaiveDate) -> Self {
         Self {
             date,

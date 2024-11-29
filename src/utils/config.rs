@@ -24,13 +24,40 @@ pub fn read_config_file(config_path: &str) -> Result<StatusPageContext> {
     Ok(config)
 }
 
+pub fn create_history_file(check_name: &str) -> Result<HistorySection> {
+    // Turn a "Backend API" into "Backend_API"
+    let check_file_path = check_name.split(" ").collect::<Vec<&str>>().join("_");
+
+    let file_path = format!("{}/{}_history.json", HISTORY_PATH, check_file_path);
+
+    let history = HistorySection {
+        name: check_name.into(),
+        last_updated: chrono::Utc::now().naive_utc(),
+        uptime: None,
+        entries: vec![],
+    };
+
+    let history_json = serde_json::to_string_pretty(&history)?;
+    std::fs::write(file_path, history_json)?;
+    Ok(history)
+}
+
+pub fn does_history_file_exist(check_name: &str) -> Result<bool> {
+    // Turn a "Backend API" into "Backend_API"
+    let check_file_path = check_name.split(" ").collect::<Vec<&str>>().join("_");
+
+    let file_path = format!("{}/{}_history.json", HISTORY_PATH, check_file_path);
+
+    Ok(std::path::Path::new(&file_path).exists())
+}
+
 pub fn read_history_file(check_name: &str) -> Result<HistorySection> {
     // Turn a "Backend API" into "Backend_API"
     let check_file_path = check_name.split(" ").collect::<Vec<&str>>().join("_");
 
     let file_path = format!("{}/{}_history.json", HISTORY_PATH, check_file_path);
 
-    let history_file = std::fs::read_to_string(file_path)?;
+    let history_file = std::fs::read_to_string(file_path.clone())?;
     let history: HistorySection = serde_json::from_str(&history_file)?;
     Ok(history)
 }

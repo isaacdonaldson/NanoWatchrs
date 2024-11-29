@@ -1,7 +1,9 @@
 use minijinja::context;
 use nanowatchrs::utils::checks::run_check;
 
-use nanowatchrs::utils::config::{read_config_file, read_history_file};
+use nanowatchrs::utils::config::{
+    create_history_file, does_history_file_exist, read_config_file, read_history_file,
+};
 use nanowatchrs::utils::templates::{
     create_env, render_incident, render_status_block, write_string_to_asset_folder,
 };
@@ -31,6 +33,30 @@ async fn main() -> Result<()> {
 
     for check in &config.checks {
         println!("Running check '{}'", check.name);
+        match does_history_file_exist(&check.name) {
+            // Match on file does not exist
+            Err(e) => {
+                println!(
+                    "Error encountered looking for history file for '{}': '{:#?}'",
+                    check.name, e
+                );
+            }
+            Ok(false) => {
+                println!("No history file found for '{}', creating one", check.name);
+                match create_history_file(&check.name) {
+                    Err(e) => {
+                        println!(
+                            "Error encountered creating history file for '{}': '{:#?}'",
+                            check.name, e
+                        );
+                    }
+                    Ok(_) => {
+                        println!("Successfully created history file for '{}'", check.name);
+                    }
+                }
+            }
+            Ok(true) => (),
+        };
         let _ = run_check(check).await?;
     }
 
@@ -48,10 +74,10 @@ fn run_template_rendering(config: &StatusPageContext) -> Result<()> {
         .checks
         .iter()
         .filter_map(|check| match read_history_file(&check.name) {
-            Err(_) => {
+            Err(e) => {
                 println!(
-                    "History entry for '{}' is required but not found",
-                    check.name
+                    "Error encountered reading history entry for '{}': '{:#?}'",
+                    check.name, e
                 );
                 None
             }

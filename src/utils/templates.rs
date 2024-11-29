@@ -143,9 +143,5 @@ pub fn render_incident(env: &Environment<'_>, incident: &Incident) -> Result<Str
 }
 
 fn format_incident_description(description: &str) -> String {
-    description
-        .replace('\t', "    ")
-        .split('\n')
-        .collect::<Vec<&str>>()
-        .join("<br>")
+    description.split('\n').collect::<Vec<&str>>().join("<br>")
 }

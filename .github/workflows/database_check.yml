@@ -1,4 +1,4 @@
-name: Domain Check
+name: Database Check
 
 on:
   # Allow manually triggering the workflow
@@ -9,11 +9,11 @@ on:
 
 env:
   RUST_TOOLCHAIN: stable
-  CHECK_NAME: Domain
+  CHECK_NAME: Database Connection
 
 jobs:
   backend_check:
-    name: Domain Status Check
+    name: Database Status Check
     runs-on: ubuntu-latest
 
     permissions:

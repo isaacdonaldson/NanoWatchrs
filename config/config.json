@@ -33,8 +33,8 @@
     {
       "name": "Database Connection",
       "type": "port",
-      "target": "localhost",
-      "port": 5432,
+      "target": "1.1.1.1",
+      "port": 8080,
       "timeout_ms": 5000
     }
   ],

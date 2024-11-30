@@ -8,30 +8,27 @@ use nanowatchrs::utils::templates::{
     create_env, render_incident, render_status_block, write_string_to_asset_folder,
 };
 use nanowatchrs::CONFIG_PATH;
-use nanowatchrs::{Result, StatusPageContext};
+use nanowatchrs::{Check, Result, StatusPageContext};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let mut config = read_config_file(CONFIG_PATH)
+    let config = read_config_file(CONFIG_PATH)
         .unwrap_or_else(|_| panic!("Failed to read config file at '{CONFIG_PATH}'"));
 
-    match parse_args() {
-        RunMode::All => {}
+    let filtered_checks: Vec<Check> = match parse_args() {
+        RunMode::All => config.checks.iter().cloned().collect(),
         RunMode::Some(checks) => {
             // Only run the specified checks
-            config.checks = config
+            config
                 .checks
                 .iter()
                 .filter(|check| checks.contains(&check.name))
                 .cloned()
-                .collect();
+                .collect()
         }
     };
 
-    // Create new immutable StatusPageContext from the mutable config
-    let config: StatusPageContext = config;
-
-    for check in &config.checks {
+    for check in &filtered_checks {
         println!("Running check '{}'", check.name);
         match does_history_file_exist(&check.name) {
             // Match on file does not exist

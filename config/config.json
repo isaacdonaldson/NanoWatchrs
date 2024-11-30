@@ -41,7 +41,7 @@
   "incidents": [
     {
       "title": "Planned DB Maintenance",
-      "description": "Between 10:00 and 11:00 UTC on October 22nd, we will be performing maintenance on our database.\nYou might notice a small distruption of service.\nIt should last no longer than 30 seconds at most.\nAny other issues, please contact support at:\n\tsupport@nanowatchrs.com",
+      "description": "Between 10:00 and 11:00 UTC on October 22nd, we will be performing maintenance on our database.\nYou might notice a small distruption of service.\nIt should last no longer than 30 seconds at most.\nAny other issues, please contact support at:\n\tme@isaacdonaldson.com",
       "status": "Ongoing",
       "display_date": "2024-10-23",
       "started_at": "2024-10-23 10:00:00",

@@ -3,6 +3,10 @@ Now
 - [ ] Finish readme page for all running options
 - [ ] Get example site up
 
+- [ ] GitHub actions
+    * [ ] Create Public Action to use (marketplace)
+    * [ ] Store a binary, and if there are not changes then use it instead of rebuilding (if possible)
+
 Next
 ====================
 - [ ] History page with the whole history of each check

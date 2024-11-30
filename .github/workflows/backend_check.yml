@@ -1,6 +1,8 @@
 name: Backend Check
 
 on:
+  # Allow manually triggering the workflow
+  workflow_dispatch:
   schedule:
     # Every hour, on the hour
     - cron: "0 * * * *"

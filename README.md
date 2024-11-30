@@ -6,6 +6,8 @@ Very minimal CSS and JS is used to make the page look and behave as necessary, b
 
 This is meant to be launched as a cron job, or as a repeated task, or something similar, to keep the status page up to date. Rust is used to allow for running as a native binary, or inside a wasm runtime.
 
+Demo site: [status.isaacdonaldson.com](https://status.isaacdonaldson.com)
+
 # Configuration
 
 All configuration and history files are stored in the `config/` directory, so make sure to have that directory created already. This repository contains an example `config/` directory that you can use as a starting/reference point.

@@ -128,6 +128,16 @@ All the fields are required for an incident to be displayed.
 - `started_at`: Incident start time (YYYY-MM-DD HH:MM:SS). Not displayed and for reference only
 - `resolved_at`: Incident resolution time (YYYY-MM-DD HH:MM:SS). Not displayed and for reference only
 
+# History
+
+Most of the history part is automated, but you can manually change the data if you'd like. The `"uptime"` field is optional, but if you specify it then it will overwrite the calculated uptime. You can also hand edit any of the history files, they can be found in the `config/` directory where each check has its own file.
+
+Some examples:
+
+- `Backend API` -> `config/Backend_API_history.json`
+- `Domain` -> `config/Domain_history.json`
+- `Database Conntection` -> `config/Database_Connection_history.json`
+
 # Running
 
 NanoWatchrs is designed to run as a scheduled task rather than a continuous service. This approach provides flexibility and works well with:
@@ -160,6 +170,69 @@ This approach gives you complete control over:
 - Which scheduler to use
 - Which Resources to use
 - Cost optimization (especially in cloud environments)
+
+## GitHub Actions
+
+The neat thing about using GitHub Actions to run this is that you can schedule it with a cron, and push to the repository to trigger a deploy action if you'd like.
+
+Here's an example workflow that builds the project, runs checks, and commits any changes:
+
+_Note_: There might be a way to use the new GitHub Personal Access Tokens, but I am not sure how to do that yet.
+
+Create a Personal Access Token: Settings > Developer Settings > Personal Access Tokens (Classic) > Generate new token. Give it the `repo` scope.
+
+Then go to your repository > Settings > Secrets and Variables > New Secret. And name it accordingly with the secret pasted.
+
+You can check out the `.github/workflows` directory for example workflows, but here's a simple one where your PAT secret is named `AUTOMATED_STATUS_CHECKS`:
+
+```yaml
+name: Backend Check
+
+on:
+  # Allow manually triggering the workflow from the Actions tab in GitHub
+  workflow_dispatch:
+  schedule:
+    # Every hour, on the hour
+    - cron: "0 * * * *"
+
+env:
+  RUST_TOOLCHAIN: stable
+  CHECK_NAME: Backend API
+
+jobs:
+  backend_check:
+    name: Backend Status Check
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.AUTOMATED_STATUS_CHECKS }}
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+
+      - name: Setup Rust cache
+        uses: Swatinem/rust-cache@v2
+
+      - run: |
+          cargo run -- -c "${{ env.CHECK_NAME }}"
+          git config --global user.name 'Your Name'
+          git config --global user.email 'your-username@users.noreply.github.com'
+          git add assets/ config/
+          git commit -m "Update status for ${{ env.CHECK_NAME }}" && git push
+```
+
+And then you can set it up where a push to the repository triggers a site redeploy from a cloud provider.
+
+_Disclaimer_: Keep in mind, when you give it the ability to write to the repository using your Personal Access Token it will trigger other actions when it pushes. Formatting, Linting, Deployments etc.
+
+_Note_: As far as I understand, GitHub Actions do not allow for running ping checks. I have not tried to test a port check yet so beware it might not work.
 
 ## Cron
 

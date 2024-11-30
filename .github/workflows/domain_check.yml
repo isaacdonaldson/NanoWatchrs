@@ -1,0 +1,40 @@
+name: Domain Check
+
+on:
+  # Allow manually triggering the workflow
+  workflow_dispatch:
+  schedule:
+    # Every hour, on the half hour
+    - cron: "30 * * * *"
+
+env:
+  RUST_TOOLCHAIN: stable
+  CHECK_NAME: Domain
+
+jobs:
+  backend_check:
+    name: Domain Status Check
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.AUTOMATED_STATUS_CHECKS }}
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+
+      - name: Setup Rust cache
+        uses: Swatinem/rust-cache@v2
+
+      - run: |
+          cargo run -- -c "${{ env.CHECK_NAME }}"
+          git config --global user.name 'Isaac Donaldson'
+          git config --global user.email 'isaacdonaldson@users.noreply.github.com'
+          git add assets/ config/
+          git commit -m "Update status for ${{ env.CHECK_NAME }}" && git push

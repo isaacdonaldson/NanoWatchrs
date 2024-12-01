@@ -3,13 +3,13 @@
     "site": {
       "name": "Nanowatchrs Status",
       "description": "Nanowatchrs status page",
-      "url": "https://status.example.com",
+      "url": "https://status.isaacdonaldson.com",
       "logo": "/nanowatchrs_logo.svg"
     },
     "page": {
       "title": "Nanowatchrs Status",
       "header": "Nanowatchrs",
-      "header_link": "https://status.example.com",
+      "header_link": "https://github.com/isaacdonaldson/nanowatchrs",
       "subheader": "Real-time status and incident updates"
     }
   },

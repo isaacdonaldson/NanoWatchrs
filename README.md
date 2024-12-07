@@ -175,6 +175,8 @@ This approach gives you complete control over:
 
 ## GitHub Actions
 
+I previously ran the demo with GitHub Actions, but since it is not actually checking anything, I thought that it was a bit wasteful and stopped it. But here is how you can set it up. (The actions are still here as an example, just diabled in GitHub).
+
 The neat thing about using GitHub Actions to run this is that you can schedule it with a cron, and push to the repository to trigger a deploy action if you'd like.
 
 Here's an example workflow that builds the project, runs checks, and commits any changes:

@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   schedule:
     # Every hour, on the half hour
-    - cron: "30 * * * *"
+    - cron: "5 0 * * *"
 
 env:
   RUST_TOOLCHAIN: stable

@@ -175,7 +175,7 @@ This approach gives you complete control over:
 
 ## GitHub Actions
 
-I previously ran the demo with GitHub Actions, but since it is not actually checking anything, I thought that it was a bit wasteful and stopped it. But here is how you can set it up. (The actions are still here as an example, just diabled in GitHub).
+I previously ran the demo with GitHub Actions and had it run every 30 mins, but since it is not actually checking anything, I thought that it was a bit wasteful and changed it to once a day. Since the ping check cannot be run in GitHub actions, I have removed it, but the configuration examples are still valid. Below is a guide on how you can set it up. (The actions are still here as an example, just disabled in GitHub).
 
 The neat thing about using GitHub Actions to run this is that you can schedule it with a cron, and push to the repository to trigger a deploy action if you'd like.
 

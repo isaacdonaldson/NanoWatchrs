@@ -1,7 +1,7 @@
 {
   "name": "Backend API",
-  "last_updated": "2024-12-07 22:48:32",
-  "uptime": null,
+  "last_updated": "2024-12-12 03:27:12",
+  "uptime": 100.0,
   "entries": [
     {
       "date": "2024-10-13",
@@ -280,6 +280,31 @@
     },
     {
       "date": "2024-12-07",
+      "state": "success",
+      "notes": "No Incident"
+    },
+    {
+      "date": "2024-12-08",
+      "state": "success",
+      "notes": "No Incident"
+    },
+    {
+      "date": "2024-12-09",
+      "state": "success",
+      "notes": "No Incident"
+    },
+    {
+      "date": "2024-12-10",
+      "state": "success",
+      "notes": "No Incident"
+    },
+    {
+      "date": "2024-12-11",
+      "state": "success",
+      "notes": "No Incident"
+    },
+    {
+      "date": "2024-12-12",
       "state": "success",
       "notes": "No Incident"
     }

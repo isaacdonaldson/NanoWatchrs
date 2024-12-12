@@ -1,7 +1,7 @@
 {
   "name": "Database Connection",
-  "last_updated": "2024-12-07 22:48:32",
-  "uptime": 98.76,
+  "last_updated": "2024-12-12 03:27:12",
+  "uptime": null,
   "entries": [
     {
       "date": "2024-10-05",
@@ -280,6 +280,16 @@
     },
     {
       "date": "2024-12-07",
+      "state": "success",
+      "notes": "No Incident"
+    },
+    {
+      "date": "2024-12-09",
+      "state": "success",
+      "notes": "No Incident"
+    },
+    {
+      "date": "2024-12-12",
       "state": "success",
       "notes": "No Incident"
     }

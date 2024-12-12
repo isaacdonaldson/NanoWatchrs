@@ -53,7 +53,7 @@ pub fn render_status_block(
 
     let mut unsuccessful_checks = 0;
 
-    let mut history = history_section
+    let incomplete_history = history_section
         .entries
         .iter()
         .filter(|entry| entry.date > date_cutoff.date())
@@ -68,16 +68,25 @@ pub fn render_status_block(
     let uptime = match history_section.uptime {
         Some(uptime) => uptime,
         #[allow(clippy::cast_precision_loss)]
-        None => (1.0 - (f64::from(unsuccessful_checks) / history.len() as f64)) * 100.0,
+        None => (1.0 - (f64::from(unsuccessful_checks) / incomplete_history.len() as f64)) * 100.0,
     };
 
-    if history.len() < HISTORY_LENGTH {
-        for _ in 0..(HISTORY_LENGTH - history.len()) {
-            #[allow(clippy::cast_possible_wrap)]
-            let date = Utc::now().naive_utc() - chrono::Duration::days(history.len() as i64);
-            history.insert(0, HistoryEntry::default_for_date(date.date()));
-        }
+    let mut history = vec![];
+
+    for idx in 0..HISTORY_LENGTH {
+        #[allow(clippy::cast_possible_wrap)]
+        let date = (Utc::now().naive_utc() - chrono::Duration::days(idx as i64)).date();
+
+        let matching_entry = incomplete_history
+            .iter()
+            .find(|entry| entry.date == date)
+            .cloned()
+            .unwrap_or_else(|| HistoryEntry::default_for_date(date));
+
+        history.push(matching_entry);
     }
+
+    let history = history.into_iter().rev().collect::<Vec<HistoryEntry>>();
 
     let state = match history.last() {
         Some(entry) => entry.state.clone(),

@@ -1,16 +1,13 @@
 Now
 ====================
-- [ ] Finish readme page for all running options
-- [ ] Get example site up
-
-- [ ] GitHub actions
+- [~] GitHub actions
     * [ ] Create Public Action to use (marketplace)
     * [ ] Store a binary, and if there are not changes then use it instead of rebuilding (if possible)
 
 Next
 ====================
 - [ ] History page with the whole history of each check
-- [ ] Append every check, calculate status based on last?, groupBy checks for date and display them all?, aggreagte on individual history page
+- [ ] Append every check, calculate status based on last?, group by checks for date and display them all?, aggregate on individual history page
 
 Coming Up
 ====================
